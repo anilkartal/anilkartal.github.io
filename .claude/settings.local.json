@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create *)",
+      "Read(//usr/local/bin/**)",
+      "Read(//Users/hasananilkartal/.nvm/versions/**)",
+      "Read(//opt/homebrew/bin/**)",
+      "Bash(export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\")",
+      "Bash(npm --version)",
+      "Read(//Users/hasananilkartal/**)",
+      "Read(//usr/bin/**)",
+      "Bash(find /Users/hasananilkartal -maxdepth 6 -name \"node\" -o -name \"npm\" 2>/dev/null | head -20; ls ~/.nvm 2>/dev/null; ls ~/.nodenv 2>/dev/null; ls /usr/local/nvm 2>/dev/null)",
+      "Read(//usr/local/**)",
+      "Bash(export PATH=\"/Users/hasananilkartal/.nvm/versions/node/v24.14.0/bin:$PATH\")",
+      "Bash(npm install *)",
+      "Bash(python3 -c ' *)",
+      "Bash(node -e ' *)",
+      "Bash(sips --cropToHeightWidth 630 1200 /Users/hasananilkartal/AI_Project/website/site/public/og-default.png --out /Users/hasananilkartal/AI_Project/website/site/public/og-default.png)",
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/hasananilkartal/AI_Project/website/site/public/og-default.png)",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:4321/)",
+      "Bash(node -e \"const a = require\\('/Users/hasananilkartal/AI_Project/website/site/node_modules/astro/package.json'\\); console.log\\(a.version\\)\")",
+      "Bash(grep -E \"^\\(terminal|zap|wrench|shield|users|code\\)\\\\.ts$\")"
+    ]
+  }
+}

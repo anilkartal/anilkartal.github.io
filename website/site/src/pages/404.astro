@@ -1,0 +1,63 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import FloatingNumber from '@/components/react/FloatingNumber';
+---
+
+<BaseLayout
+  title="404 — Sayfa Bulunamadı"
+  description="Aradığın sayfa burada değil."
+>
+  <section class="not-found">
+    <div class="container">
+      <FloatingNumber client:load>404</FloatingNumber>
+      <h1 class="not-found-title">Aradığın sayfa burada değil.</h1>
+      <p class="not-found-sub">
+        Taşınmış, silinmiş ya da hiç olmamış olabilir.
+      </p>
+      <a href="/" class="not-found-back">Anasayfaya dön →</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: flex;
+    align-items: center;
+    min-height: calc(100vh - 8rem);
+    padding-block: var(--space-section-mobile);
+  }
+
+  @media (min-width: 1024px) {
+    .not-found {
+      padding-block: var(--space-section-desktop);
+    }
+  }
+
+  .not-found-title {
+    font-size: clamp(1.5rem, 3vw + 0.5rem, 2.5rem);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+    color: var(--text);
+    margin-bottom: var(--space-4);
+    max-width: 28ch;
+  }
+
+  .not-found-sub {
+    font-size: var(--text-base);
+    color: var(--text-faint);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-10);
+  }
+
+  .not-found-back {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .not-found-back:hover {
+    color: var(--accent);
+  }
+</style>

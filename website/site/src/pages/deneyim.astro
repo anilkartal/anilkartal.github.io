@@ -1,0 +1,946 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionLabel from '@/components/astro/SectionLabel.astro';
+import TechTag from '@/components/astro/TechTag.astro';
+import {
+  Terminal,
+  Brain,
+  Shield,
+  ChevronRight,
+  Layers,
+  GitBranch,
+  Users,
+  GraduationCap,
+  BadgeCheck,
+  Cpu,
+} from '@lucide/astro';
+import { site } from '@/data/site';
+
+const philosophy = [
+  {
+    icon: Terminal,
+    label: '01. TASARIM AŞAMASINDA OTOMASYON',
+    text: 'Tekrarlanabilir her şey CI pipeline\'ına taşınır. Manuel efor yalnızca keşifsel test ve yaratıcı edge-case tespiti için saklıdır.',
+  },
+  {
+    icon: Brain,
+    label: '02. VERİYE DAYALI DOĞRULAMA',
+    text: 'Metrikler tek gerçek kaynaktır. Flaky testler kritik altyapı hatası olarak ele alınır, karantinaya alınır ve deterministik hale getirilir.',
+  },
+  {
+    icon: Shield,
+    label: '03. HER ŞEYİ SOLA KAYDIR',
+    text: 'Güvenlik ve performans analizini PR\'ın ilk commit\'inde entegre etmek, geç aşama mimari başarısızlıklarını önler.',
+  },
+];
+
+const timeline = [
+  {
+    period: '2022 — Günümüz',
+    role: 'Senior Test Automation Engineer',
+    company: '[Fintech Şirketi]',
+    description: 'Playwright tabanlı E2E test framework\'ü sıfırdan inşa etti. CI/CD pipeline\'larına quality gate entegrasyonu ile kritik hataların production\'a ulaşmasını engelledi.',
+    achievements: [
+      '200+ test senaryosu ile %87 kritik akış coverage\'ına ulaştı',
+      'Regresyon süresini 3-4 günden 45 dakikaya indirdi',
+      'AI destekli görsel regresyon test altyapısını hayata geçirdi',
+    ],
+    tags: ['Playwright', 'TypeScript', 'GitHub Actions', 'Allure'],
+  },
+  {
+    period: '2020 — 2022',
+    role: 'Test Automation Engineer',
+    company: '[SaaS Şirketi]',
+    description: 'Mikroservis mimarisi için REST ve GraphQL API test framework\'ü geliştirdi. Contract testing ile servisler arası entegrasyon hatalarını deployment öncesinde yakaladı.',
+    achievements: [
+      'Pact ile 12 servis entegrasyonunu contract test kapsamına aldı',
+      'Test flakiness oranını %15\'ten %2\'nin altına düşürdü',
+      'Docker Compose tabanlı izole test ortamı kurdu',
+    ],
+    tags: ['TypeScript', 'Playwright', 'Pact', 'Docker', 'PostgreSQL'],
+  },
+  {
+    period: '2018 — 2020',
+    role: 'QA Engineer',
+    company: '[Yazılım Şirketi]',
+    description: 'Manuel test süreçlerini otomatize ederek ekip verimliliğini artırdı. Test dokümantasyonunu standartlaştırdı ve junior mühendislere mentörlük yaptı.',
+    achievements: [
+      'Smoke test suite\'i ile deploy sürecini hızlandırdı',
+      'QA süreçleri için şirket içi dokümantasyon sistemi kurdu',
+    ],
+    tags: ['Python', 'Selenium', 'Jenkins', 'Jira'],
+  },
+];
+
+const expertiseClusters = [
+  {
+    id: 'core',
+    title: 'Core Automation',
+    colSpan: 2,
+    icon: Layers,
+    subSkills: [
+      { label: 'WEB E2E', level: 'UZMAN', width: 92, tools: 'Playwright, Cypress, Selenium' },
+      { label: 'MOBİL', level: 'İLERİ', width: 75, tools: 'Appium, Espresso, XCUITest' },
+      { label: 'API & PERF', level: 'UZMAN', width: 88, tools: 'k6, Postman, Playwright API' },
+    ],
+  },
+  {
+    id: 'ai',
+    title: 'AI & İnovasyon',
+    colSpan: 1,
+    icon: Brain,
+    description: 'LLM tabanlı test senaryosu üretimi ve AI destekli görsel regresyon testleri. Geleneksel assertion\'ların kaçırdığı anomalileri tespit eden heuristik analiz.',
+  },
+  {
+    id: 'cicd',
+    title: 'CI/CD & Altyapı',
+    colSpan: 1,
+    icon: GitBranch,
+    description: 'GitHub Actions, Docker, Kubernetes. Katı quality gate\'ler ve otomatik rollback mekanizmaları içeren dayanıklı pipeline mimarisi.',
+  },
+  {
+    id: 'culture',
+    title: 'Kültür & Liderlik',
+    colSpan: 2,
+    icon: Users,
+    description: '"Quality First" zihniyetini ekiplere yerleştirme. Playwright eğitimleri, pair testing seansları ve mühendislik verimliliği kültürü oluşturma üzerine odaklanma.',
+  },
+];
+
+const education = [
+  {
+    degree: 'Bilgisayar Mühendisliği Lisans',
+    school: '[Üniversite Adı]',
+    period: '2014 — 2018',
+    specialization: 'Yazılım Mühendisliği',
+  },
+];
+
+const certifications = [
+  { name: 'ISTQB Advanced Test Manager' },
+  { name: 'Playwright Test Automation (LambdaTest)' },
+  { name: 'AWS Cloud Practitioner' },
+  { name: 'Professional Scrum Master I (Scrum.org)' },
+];
+---
+
+<BaseLayout
+  title="Deneyim"
+  description="Kariyer yolculuğu, teknik uzmanlıklar, eğitim ve sertifikalar."
+>
+  <div class="deneyim-page">
+
+    <!-- 01 // KİMLİK -->
+    <section class="section identity-section">
+      <div class="container">
+        <div class="identity-grid">
+          <div class="identity-left">
+            <SectionLabel number="01" label="Kimlik" />
+            <h1 class="identity-title">
+              Kırılmayan yazılım<br />sistemleri inşa ediyorum.
+            </h1>
+            <p class="identity-bio">
+              Kalite bir aşama değil, kültürdür. Manuel testin gerçek darboğazın hız değil, güven olduğunu fark ettikten sonra kariyerimi otomasyon mimarisine adadım. Finans ve SaaS sektörlerinde büyük ölçekli sistemler için test altyapıları inşa ettim.
+            </p>
+          </div>
+
+          <div class="philosophy-card">
+            <h2 class="philosophy-title">Mühendislik Felsefem</h2>
+            <ul class="philosophy-list">
+              {philosophy.map(({ icon: Icon, label, text }) => (
+                <li class="philosophy-item">
+                  <div class="philosophy-icon">
+                    <Icon size={20} strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <p class="philosophy-item-label">{label}</p>
+                    <p class="philosophy-item-text">{text}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 // YOLCULUK -->
+    <section class="section timeline-section">
+      <div class="container">
+        <SectionLabel number="02" label="Yolculuk" />
+        <h2 class="section-title">Profesyonel Yolculuk</h2>
+
+        <div class="timeline">
+          <div class="timeline-line" aria-hidden="true"></div>
+
+          {timeline.map((entry, i) => (
+            <div class={`timeline-entry ${i % 2 === 0 ? 'is-right' : 'is-left'}`} data-reveal data-reveal-delay={String(i + 1) as "1" | "2" | "3"}>
+              <!-- Yıl etiketi -->
+              <div class="timeline-period">
+                <span class="timeline-period-text">{entry.period}</span>
+              </div>
+
+              <!-- Merkez nokta -->
+              <div class="timeline-dot" aria-hidden="true"></div>
+
+              <!-- Kart -->
+              <div class="timeline-card">
+                <div class="timeline-card-header">
+                  <p class="timeline-role">{entry.role}</p>
+                  <p class="timeline-company">{entry.company}</p>
+                </div>
+                <p class="timeline-desc">{entry.description}</p>
+                <ul class="timeline-achievements">
+                  {entry.achievements.map((a) => (
+                    <li class="timeline-achievement">
+                      <ChevronRight size={13} strokeWidth={2} class="timeline-chevron" />
+                      <span>{a}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div class="timeline-tags">
+                  {entry.tags.map((t) => <TechTag label={t} />)}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 // UZMANLIKLAR -->
+    <section class="section expertise-section">
+      <div class="container">
+        <SectionLabel number="03" label="Uzmanlıklar" />
+        <h2 class="section-title">Uzmanlık Alanları</h2>
+
+        <div class="expertise-grid">
+          {expertiseClusters.map((cluster, i) => (
+            <div data-reveal data-reveal-delay={String((i % 4) + 1) as "1" | "2" | "3" | "4"}
+              class={`expertise-card ${cluster.colSpan === 2 ? 'expertise-card--wide' : ''}`}
+            >
+              <div class="expertise-card-header">
+                <div class="expertise-icon">
+                  <cluster.icon size={20} strokeWidth={1.5} />
+                </div>
+                <h3 class="expertise-card-title">{cluster.title}</h3>
+              </div>
+
+              {cluster.subSkills ? (
+                <div class="skill-grid">
+                  {cluster.subSkills.map((skill) => (
+                    <div class="skill-item">
+                      <div class="skill-item-header">
+                        <span class="skill-label">{skill.label}</span>
+                        <span class="skill-badge">{skill.level}</span>
+                      </div>
+                      <div class="skill-bar" role="presentation">
+                        <div class="skill-bar-fill" style={`width: ${skill.width}%`}></div>
+                      </div>
+                      <p class="skill-tools">{skill.tools}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p class="expertise-desc">{cluster.description}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 // EĞİTİM + 05 // SERTİFİKALAR -->
+    <section class="section credentials-section">
+      <div class="container">
+        <div class="credentials-grid">
+
+          <!-- Eğitim -->
+          <div>
+            <SectionLabel number="04" label="Eğitim" />
+            <div class="education-list">
+              {education.map((edu) => (
+                <div class="education-card">
+                  <div class="education-icon">
+                    <GraduationCap size={22} strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <h3 class="education-degree">{edu.degree}</h3>
+                    <p class="education-school">{edu.school}</p>
+                    <p class="education-period">{edu.period}</p>
+                    <span class="education-spec">{edu.specialization}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Sertifikalar -->
+          <div>
+            <SectionLabel number="05" label="Sertifikalar" />
+            <ul class="cert-list">
+              {certifications.map((cert) => (
+                <li class="cert-item">
+                  <span class="cert-name">{cert.name}</span>
+                  <BadgeCheck size={16} strokeWidth={1.5} class="cert-check" />
+                </li>
+              ))}
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Alt CTA -->
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-inner">
+          <p class="cta-label">
+            <span class="cta-accent">// </span>İletişim
+          </p>
+          <h2 class="cta-title">Birlikte çalışalım mı?</h2>
+          <p class="cta-sub">
+            Yeni bir projeniz mi var? Ekibinizin test altyapısını güçlendirmek mi istiyorsunuz?
+            Konuşmaktan memnuniyet duyarım.
+          </p>
+          <div class="cta-actions">
+            <a href="/public/cv.pdf" download class="btn btn-primary">CV İNDİR</a>
+            <a
+              href={site.social.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-secondary"
+            >
+              LINKEDIN'DE BAĞLAN
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  /* ─── Genel ─── */
+  .section-title {
+    font-size: var(--text-3xl);
+    letter-spacing: var(--tracking-tight);
+    color: var(--text);
+    margin-bottom: var(--space-12);
+    line-height: var(--leading-snug);
+  }
+
+  /* ─── 01 KİMLİK ─── */
+  .identity-section {
+    padding-top: var(--space-12);
+  }
+
+  .identity-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+    align-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .identity-grid {
+      grid-template-columns: 1fr 420px;
+      gap: var(--space-16);
+    }
+  }
+
+  .identity-title {
+    font-size: clamp(2rem, 4vw + 0.5rem, 3rem);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+    color: var(--text);
+    margin-bottom: var(--space-6);
+  }
+
+  .identity-bio {
+    font-size: var(--text-lg);
+    color: var(--text-muted);
+    line-height: var(--leading-relaxed);
+    max-width: 52ch;
+  }
+
+  /* Felsefe kartı */
+  .philosophy-card {
+    border: 1px solid var(--border);
+    border-left: 1px solid var(--accent);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    background-color: var(--bg-subtle);
+  }
+
+  .philosophy-title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text);
+    margin-bottom: var(--space-8);
+  }
+
+  .philosophy-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+  }
+
+  .philosophy-item {
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+
+  .philosophy-icon {
+    flex-shrink: 0;
+    color: var(--accent);
+    margin-top: 2px;
+  }
+
+  .philosophy-item-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--space-2);
+    line-height: 1;
+  }
+
+  .philosophy-item-text {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ─── 02 TIMELINE ─── */
+  .timeline-section {
+    padding-top: var(--space-section-mobile);
+  }
+
+  @media (min-width: 1024px) {
+    .timeline-section {
+      padding-top: var(--space-section-desktop);
+    }
+  }
+
+  .timeline {
+    position: relative;
+    padding-block: var(--space-4);
+  }
+
+  /* Merkez dikey çizgi — sadece desktop */
+  .timeline-line {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .timeline-line {
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: var(--border);
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Timeline entry */
+  .timeline-entry {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-12);
+    padding-left: var(--space-8);
+  }
+
+  .timeline-entry:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .timeline-entry {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 var(--space-12);
+      align-items: start;
+      padding-left: 0;
+    }
+  }
+
+  /* Nokta */
+  .timeline-dot {
+    position: absolute;
+    left: -5px;
+    top: var(--space-2);
+    width: 10px;
+    height: 10px;
+    background-color: var(--accent);
+    border: 2px solid var(--bg);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .timeline-dot {
+      left: 50%;
+      top: var(--space-3);
+      transform: translateX(-50%);
+      width: 12px;
+      height: 12px;
+      grid-column: 1 / -1;
+      position: absolute;
+    }
+  }
+
+  /* Dönem etiketi */
+  .timeline-period {
+    order: -1;
+  }
+
+  .timeline-period-text {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+
+  @media (min-width: 1024px) {
+    .timeline-entry.is-right .timeline-period {
+      grid-column: 1;
+      text-align: right;
+      padding-right: calc(var(--space-12) / 2 + 8px);
+      padding-top: var(--space-3);
+      order: 0;
+    }
+
+    .timeline-entry.is-right .timeline-card {
+      grid-column: 2;
+      padding-left: calc(var(--space-12) / 2 + 8px);
+    }
+
+    .timeline-entry.is-left .timeline-period {
+      grid-column: 2;
+      text-align: left;
+      padding-left: calc(var(--space-12) / 2 + 8px);
+      padding-top: var(--space-3);
+      order: 1;
+    }
+
+    .timeline-entry.is-left .timeline-card {
+      grid-column: 1;
+      padding-right: calc(var(--space-12) / 2 + 8px);
+      order: 0;
+    }
+  }
+
+  /* Kart */
+  .timeline-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-7);
+    background-color: var(--bg);
+    transition: border-color var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .timeline-card:hover {
+    border-color: var(--border-strong);
+    background-color: var(--bg-subtle);
+  }
+
+  .timeline-card-header {
+    margin-bottom: var(--space-4);
+  }
+
+  .timeline-role {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text);
+    margin-bottom: var(--space-1);
+    line-height: var(--leading-snug);
+  }
+
+  .timeline-company {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-faint);
+    letter-spacing: 0.06em;
+  }
+
+  .timeline-desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-5);
+  }
+
+  .timeline-achievements {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+  }
+
+  .timeline-achievement {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  .timeline-chevron {
+    flex-shrink: 0;
+    color: var(--accent);
+    margin-top: 3px;
+  }
+
+  .timeline-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  /* ─── 03 UZMANLIKLAR ─── */
+  .expertise-section {
+    padding-top: var(--space-section-mobile);
+  }
+
+  @media (min-width: 1024px) {
+    .expertise-section {
+      padding-top: var(--space-section-desktop);
+    }
+  }
+
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 768px) {
+    .expertise-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .expertise-card {
+    border: 1px solid var(--border);
+    border-top: 1px solid var(--accent);
+    border-radius: var(--radius-lg);
+    padding: var(--space-7);
+    background-color: var(--bg);
+    transition: border-color var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .expertise-card:hover {
+    background-color: var(--bg-subtle);
+  }
+
+  @media (min-width: 768px) {
+    .expertise-card--wide {
+      grid-column: span 2;
+    }
+  }
+
+  .expertise-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-7);
+  }
+
+  .expertise-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .expertise-card-title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text);
+  }
+
+  .expertise-desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Skill grid */
+  .skill-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .skill-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .skill-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .skill-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .skill-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .skill-badge {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background-color: var(--accent-bg);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: 0.15em 0.4em;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+
+  .skill-bar {
+    height: 3px;
+    background-color: var(--border);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .skill-bar-fill {
+    height: 100%;
+    background-color: var(--accent);
+    border-radius: 1px;
+  }
+
+  .skill-tools {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.02em;
+    line-height: var(--leading-normal);
+  }
+
+  /* ─── 04 EĞİTİM + 05 SERTİFİKALAR ─── */
+  .credentials-section {
+    padding-top: var(--space-section-mobile);
+  }
+
+  @media (min-width: 1024px) {
+    .credentials-section {
+      padding-top: var(--space-section-desktop);
+    }
+  }
+
+  .credentials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+
+  @media (min-width: 768px) {
+    .credentials-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+    }
+  }
+
+  /* Eğitim */
+  .education-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .education-card {
+    display: flex;
+    gap: var(--space-5);
+    align-items: flex-start;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    background-color: var(--bg);
+  }
+
+  .education-icon {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--accent);
+    background-color: var(--bg-subtle);
+  }
+
+  .education-degree {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text);
+    margin-bottom: var(--space-1);
+    line-height: var(--leading-snug);
+  }
+
+  .education-school {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin-bottom: var(--space-1);
+  }
+
+  .education-period {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-faint);
+    letter-spacing: 0.04em;
+    margin-bottom: var(--space-3);
+  }
+
+  .education-spec {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    background-color: var(--accent-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.2em 0.6em;
+    letter-spacing: 0.04em;
+  }
+
+  /* Sertifikalar */
+  .cert-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .cert-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-5);
+    background-color: var(--bg);
+    transition: border-color var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .cert-item:hover {
+    border-color: var(--border-strong);
+    background-color: var(--bg-subtle);
+  }
+
+  .cert-name {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .cert-check {
+    flex-shrink: 0;
+    color: var(--accent);
+  }
+
+  /* ─── CTA ─── */
+  .cta-section {
+    padding-top: var(--space-section-mobile);
+    padding-bottom: var(--space-section-mobile);
+  }
+
+  @media (min-width: 1024px) {
+    .cta-section {
+      padding-top: var(--space-section-desktop);
+      padding-bottom: var(--space-section-desktop);
+    }
+  }
+
+  .cta-inner {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-12);
+    max-width: 640px;
+  }
+
+  .cta-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: var(--space-4);
+    line-height: 1;
+  }
+
+  .cta-accent {
+    color: var(--accent);
+  }
+
+  .cta-title {
+    font-size: var(--text-3xl);
+    letter-spacing: var(--tracking-tight);
+    color: var(--text);
+    margin-bottom: var(--space-4);
+    line-height: var(--leading-snug);
+  }
+
+  .cta-sub {
+    font-size: var(--text-base);
+    color: var(--text-muted);
+    line-height: var(--leading-relaxed);
+    max-width: 48ch;
+    margin-bottom: var(--space-8);
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+</style>

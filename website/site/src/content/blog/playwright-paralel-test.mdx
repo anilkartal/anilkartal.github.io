@@ -1,0 +1,80 @@
+---
+title: "Playwright'ta Paralel Test Çalıştırmanın İncelikleri"
+description: "Playwright'ın built-in parallelism mekanizmasını doğru yapılandırmak, CI pipeline sürelerini dramatik biçimde kısaltır. Bu yazıda worker stratejileri, test izolasyonu ve yaygın tuzaklardan kaçınma yollarını inceliyorum."
+date: 2026-04-10
+category: "Playwright"
+tags: ["playwright", "parallelism", "ci-cd", "typescript", "test-automation"]
+draft: false
+---
+
+Playwright varsayılan olarak paralel çalıştırmayı destekler, ancak çoğu ekip bu özelliği tam kapasitesiyle kullanmıyor. Yanlış yapılandırılmış bir paralel kurulum, test süresini kısaltmak yerine flaky test yağmuruna dönüşebilir. Birkaç projede edindiğim deneyimle bu denklemi doğru kurmak için izlediğim yaklaşımı paylaşıyorum.
+
+## Worker Stratejisi Nasıl Seçilir
+
+Playwright'ın `workers` ayarı iki farklı bağlamda farklı davranır: local makinede CPU çekirdek sayısına göre otomatik ayarlanırken, CI ortamında açıkça belirtilmesi daha güvenli bir tercih.
+
+```typescript
+// playwright.config.ts
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  workers: process.env.CI ? 2 : undefined,
+  fullyParallel: true,
+  retries: process.env.CI ? 1 : 0,
+  use: {
+    baseURL: process.env.BASE_URL ?? 'http://localhost:3000',
+    trace: 'on-first-retry',
+  },
+});
+```
+
+CI'da `workers: 2` gibi sabit bir değer vermek, runner'ın kaynak yapısından bağımsız olarak tutarlı davranış sağlar. GitHub Actions'ın standart runner'ı 2 CPU çekirdeğiyle gelir; bunu aşan worker değerleri context switching maliyetiyle net kazancı sıfırlayabilir.
+
+## Test İzolasyonu — Neden Kritik
+
+Paralel çalıştırmanın en büyük düşmanı paylaşılan durum. Database seed'i aynı kullanıcı kaydına yazıyorsa, iki paralel test aynı kaydı değiştirmeye çalışıp birbirini bozar. Bunu çözmek için her worker kendi izole state'ine sahip olmalı.
+
+```typescript
+// fixtures/test.ts
+import { test as base } from '@playwright/test';
+import { createTestUser, deleteTestUser } from '../helpers/db';
+
+type TestUser = { id: string; email: string };
+
+export const test = base.extend<{ testUser: TestUser }>({
+  testUser: async ({}, use) => {
+    // Her test için benzersiz kullanıcı
+    const user = await createTestUser(`test-${Date.now()}@example.com`);
+    await use(user);
+    await deleteTestUser(user.id);
+  },
+});
+```
+
+Bu pattern, her test kendi fixture'ını oluşturup temizlediği için paralel çalışmada çakışma olmaz. `Date.now()` yerine `crypto.randomUUID()` daha güvenli bir tercih olsa da CI ortamında zaman damgası genellikle yeterli.
+
+## Proje Bazlı Paralelizm
+
+Playwright'ın `projects` özelliğini paralel çalıştırmanın bir katmanı olarak kullanabilirsiniz. Farklı tarayıcı veya viewport kombinasyonları bağımsız worker'larda çalışır.
+
+```typescript
+export default defineConfig({
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'mobile', use: { ...devices['iPhone 14'] } },
+    { name: 'api', testDir: './tests/api' },
+  ],
+});
+```
+
+`api` projesini ayrı bir dizine yönlendirmek, UI testlerinin yavaş ağ simülasyonundan etkilenmeden paralel çalışmasını sağlar.
+
+## Yaygın Tuzaklar
+
+**Port çakışması:** Her worker aynı porta bağlanmaya çalışıyorsa `webServer.port` yerine `webServer.reuseExistingServer: true` ile tek bir server örneği kullanın.
+
+**Screenshot karşılaştırması:** Görsel regresyon testlerini `fullyParallel: false` ile veya ayrı bir project tanımı içinde sıralı çalıştırın. Render zamanlama farklılıkları paralelde flaky sonuçlara yol açar.
+
+**Shared browser state:** `storageState` ile oturum yeniden kullanıyorsanız, bu state dosyasını her worker ayrı bir kopya üzerinden okumalı. Tek dosyaya eş zamanlı yazma çakışma riski taşır.
+
+Paralel test altyapısını doğru kurduğunuzda CI pipeline süresindeki düşüş gözle görülür olur. 8 dakikalık bir suite 2-3 dakikaya düşebilir; ancak bu kazancı elde etmek için izolasyon disiplininden taviz vermemek gerekiyor.

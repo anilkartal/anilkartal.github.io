@@ -1,0 +1,214 @@
+/* ─── Prose / MDX Tipografisi ─── */
+.prose {
+  max-width: var(--content-prose);
+  color: var(--text-muted);
+  line-height: var(--leading-loose);
+}
+
+.prose p {
+  margin-bottom: 1.5em;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: var(--text);
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+}
+
+.prose h1 { font-size: var(--text-3xl); }
+.prose h2 { font-size: clamp(1.375rem, 2vw + 0.5rem, 1.75rem); }
+.prose h3 { font-size: var(--text-xl); }
+.prose h4 { font-size: var(--text-lg); }
+
+.prose strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.prose em {
+  color: var(--text);
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.prose a:hover {
+  color: var(--accent-hover);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.prose li {
+  margin-bottom: 0.5em;
+  color: var(--text-muted);
+}
+
+.prose li::marker {
+  color: var(--accent);
+}
+
+.prose blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: var(--space-6);
+  margin: 2em 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.5em 0;
+}
+
+/* ─── Inline Kod ─── */
+.prose code:not(pre code) {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background-color: var(--code-bg);
+  color: var(--text);
+  padding: 0.2em 0.4em;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+/* ─── Shiki Kod Blokları ─── */
+.prose pre,
+pre.astro-code {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+  margin: 1.75em 0;
+  position: relative;
+}
+
+.prose pre.astro-code,
+pre.astro-code {
+  padding: var(--space-6);
+}
+
+/* Shiki dual-theme — data-theme uyumu */
+[data-theme='dark'] .astro-code,
+[data-theme='dark'] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+[data-theme='light'] .astro-code,
+[data-theme='light'] .astro-code span {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg) !important;
+  font-style: var(--shiki-light-font-style) !important;
+  font-weight: var(--shiki-light-font-weight) !important;
+  text-decoration: var(--shiki-light-text-decoration) !important;
+}
+
+/* Kopyala düğmesi wrapper */
+.code-block-wrapper {
+  position: relative;
+}
+
+.code-block-wrapper .code-lang {
+  position: absolute;
+  top: var(--space-3);
+  right: 3.5rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.code-block-wrapper .copy-btn {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-faint);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+  opacity: 0;
+}
+
+.code-block-wrapper:hover .copy-btn {
+  opacity: 1;
+}
+
+.code-block-wrapper .copy-btn:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.code-block-wrapper .copy-btn.copied {
+  color: var(--accent);
+  border-color: var(--accent);
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .prose pre,
+  pre.astro-code {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    margin-inline: calc(var(--space-4) * -1);
+    padding-inline: var(--space-4);
+  }
+}
+
+/* ─── Tablo ─── */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2em 0;
+  font-size: var(--text-sm);
+}
+
+.prose th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--text);
+  border-bottom: 1px solid var(--border-strong);
+  padding: var(--space-3) var(--space-4);
+}
+
+.prose td {
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-3) var(--space-4);
+  color: var(--text-muted);
+}
+
+.prose tr:last-child td {
+  border-bottom: none;
+}

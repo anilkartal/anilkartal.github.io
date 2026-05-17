@@ -1,0 +1,268 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionLabel from '@/components/astro/SectionLabel.astro';
+import { getCollection } from 'astro:content';
+import { formatDateShort } from '@/lib/utils';
+
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Yıl bazlı gruplama
+const postsByYear = allPosts.reduce<Record<number, typeof allPosts>>((acc, post) => {
+  const year = post.data.date.getFullYear();
+  if (!acc[year]) acc[year] = [];
+  acc[year].push(post);
+  return acc;
+}, {});
+
+const years = Object.keys(postsByYear).map(Number).sort((a, b) => b - a);
+
+const categories = [
+  'Playwright',
+  'TypeScript',
+  'Test Automation',
+  'AI Testing',
+  'Software Quality',
+  'Engineering Notes',
+  'Career Growth',
+];
+
+// readingTime için body içeriği render etmeden yaklaşık kelime sayımı
+function approxReadingTime(body: string | undefined) {
+  if (!body) return '3 dk okuma';
+  const words = body.trim().split(/\s+/).length;
+  const mins = Math.ceil(words / 200);
+  return `${mins} dk okuma`;
+}
+---
+
+<BaseLayout title="Blog" description="Test otomasyonu, yazılım kalitesi ve mühendislik üzerine yazılar.">
+  <section class="blog-page section">
+    <div class="container">
+
+      <SectionLabel number="00" label="Blog" />
+      <h1 class="blog-title">Yazılar</h1>
+      <p class="blog-sub">
+        Playwright, TypeScript ve test mühendisliği üzerine notlar.
+      </p>
+
+      <!-- Kategori filtresi -->
+      <div class="blog-filters" role="group" aria-label="Kategoriye göre filtrele">
+        <button class="filter-chip is-active" data-category="all">Tümü</button>
+        {categories.map((cat) => (
+          <button class="filter-chip" data-category={cat}>{cat}</button>
+        ))}
+      </div>
+
+      <!-- Yazı listesi -->
+      <div class="blog-list" id="blog-list">
+        {years.map((year) => (
+          <div class="blog-year-group" data-year={year}>
+            <h2 class="blog-year">{year}</h2>
+            <ul class="blog-posts">
+              {postsByYear[year].map((post) => (
+                <li
+                  class="blog-post-row"
+                  data-category={post.data.category}
+                >
+                  <a href={`/blog/${post.id}`} class="blog-post-link">
+                    <span class="blog-post-date">
+                      {formatDateShort(post.data.date)}
+                    </span>
+                    <span class="blog-post-cat">{post.data.category}</span>
+                    <span class="blog-post-title">{post.data.title}</span>
+                    <span class="blog-post-time">
+                      {approxReadingTime(post.body)}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.filter-chip');
+  const rows = document.querySelectorAll<HTMLElement>('.blog-post-row');
+  const yearGroups = document.querySelectorAll<HTMLElement>('.blog-year-group');
+
+  function filter(category: string) {
+    chips.forEach((c) => c.classList.toggle('is-active', c.dataset.category === category));
+
+    rows.forEach((row) => {
+      const match = category === 'all' || row.dataset.category === category;
+      row.style.display = match ? '' : 'none';
+    });
+
+    // Boş yıl gruplarını gizle
+    yearGroups.forEach((group) => {
+      const visible = [...group.querySelectorAll<HTMLElement>('.blog-post-row')]
+        .some((r) => r.style.display !== 'none');
+      (group as HTMLElement).style.display = visible ? '' : 'none';
+    });
+  }
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => filter(chip.dataset.category ?? 'all'));
+  });
+</script>
+
+<style>
+  .blog-title {
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+    letter-spacing: var(--tracking-tight);
+    color: var(--text);
+    margin-bottom: var(--space-4);
+  }
+
+  .blog-sub {
+    font-size: var(--text-lg);
+    color: var(--text-muted);
+    max-width: 48ch;
+    margin-bottom: var(--space-10);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Filtreler */
+  .blog-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-12);
+  }
+
+  .filter-chip {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.375rem 0.75rem;
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--ease-out);
+    line-height: 1;
+  }
+
+  .filter-chip:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+
+  .filter-chip.is-active {
+    background: var(--accent-bg);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .filter-chip:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Yıl grubu */
+  .blog-year-group {
+    margin-bottom: var(--space-10);
+  }
+
+  .blog-year {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    letter-spacing: var(--tracking-widest);
+    color: var(--text-faint);
+    text-transform: uppercase;
+    margin-bottom: var(--space-4);
+    line-height: 1;
+  }
+
+  .blog-posts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Yazı satırı */
+  .blog-post-row {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .blog-post-link {
+    display: grid;
+    grid-template-columns: 7rem 1fr auto;
+    align-items: baseline;
+    gap: var(--space-4) var(--space-6);
+    padding: var(--space-5) var(--space-3);
+    border-left: 2px solid transparent;
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+  .blog-post-link:hover {
+    border-left-color: var(--accent);
+    background-color: var(--bg-subtle);
+    padding-left: var(--space-5);
+  }
+
+  .blog-post-date {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-faint);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .blog-post-cat {
+    display: none; /* Desktop'ta title sütununa taşınmış */
+  }
+
+  .blog-post-title {
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--text);
+    line-height: var(--leading-snug);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .blog-post-link:hover .blog-post-title {
+    color: var(--accent);
+  }
+
+  .blog-post-time {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-faint);
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 0.03em;
+  }
+
+  /* Mobile: kategori görünür, grid tek kolon */
+  @media (max-width: 640px) {
+    .blog-post-link {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+
+    .blog-post-cat {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .blog-post-time {
+      display: none;
+    }
+  }
+</style>

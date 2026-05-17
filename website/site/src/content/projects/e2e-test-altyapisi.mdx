@@ -1,0 +1,101 @@
+---
+title: "Fintech Uygulaması için E2E Test Altyapısı"
+description: "Sıfırdan inşa edilen Playwright tabanlı E2E test framework'ü. 200+ test senaryosu, CI/CD entegrasyonu ve multi-environment desteği ile deployment güvenilirliğini %40 artırdı."
+date: 2025-11-01
+year: 2025
+role: "Test Automation Engineer"
+technologies: ["Playwright", "TypeScript", "GitHub Actions", "Docker", "Allure"]
+featured: true
+order: 1
+---
+
+## Problem
+
+Fintech startup'ının büyüme hızı, manuel QA süreçleriyle sürdürülemez hale gelmişti. Her release döngüsünde 3-4 günlük regresyon testi, sprint kapasitesini yarı yarıya kısıtlıyor; kritik ödeme akışlarındaki bug'lar production'a sızıyordu.
+
+Ana sorunlar:
+- Regresyon coverage'ı tamamen manuel, belgelenmemiş
+- Farklı ortamlar (staging, UAT) için ayrı test senaryoları yok
+- CI pipeline'ında otomatik test adımı mevcut değil
+- Test sonuçlarına raporlama ve trend analizi eksik
+
+## Yaklaşım
+
+Sıfırdan başlamak yerine önce mevcut manuel test dokümanlarını analiz ettim ve risk matrisine göre önceliklendirdim. Ödeme akışları, kimlik doğrulama ve limit işlemleri "kritik" olarak işaretlendi — ilk iterasyonda bunlar otomatize edildi.
+
+Framework mimarisi için Page Object Model seçimi bilinçliydi: selector'ların tek yerden yönetilmesi ve test okunabilirliği için vazgeçilmez. Her sayfanın kendi `.ts` dosyası, her akışın kendi fixture seti.
+
+Test ortamlarını izole etmek için environment-specific config objesi:
+
+```typescript
+// config/environments.ts
+export const environments = {
+  staging: {
+    baseURL: 'https://staging.app.example.com',
+    apiURL: 'https://api.staging.example.com',
+    credentials: {
+      admin: { email: process.env.STAGING_ADMIN_EMAIL!, password: process.env.STAGING_ADMIN_PASS! },
+    },
+  },
+  uat: {
+    baseURL: 'https://uat.app.example.com',
+    apiURL: 'https://api.uat.example.com',
+    credentials: {
+      admin: { email: process.env.UAT_ADMIN_EMAIL!, password: process.env.UAT_ADMIN_PASS! },
+    },
+  },
+} as const;
+
+export type Environment = keyof typeof environments;
+```
+
+## Çözüm
+
+12 haftalık geliştirme sürecinin sonunda:
+
+**Framework katmanları:**
+- `pages/` — Page Object'ler, her sayfa için ayrı class
+- `fixtures/` — Kullanıcı tipleri, test verileri, API client
+- `helpers/` — DB seed, cleanup, assertion yardımcıları
+- `tests/` — kritik akışlar / regresyon / smoke olarak organize
+
+**CI/CD entegrasyonu** — GitHub Actions workflow, her PR'da smoke suite çalışıyor; main merge'de tam regresyon:
+
+```yaml
+# .github/workflows/e2e.yml (kısaltılmış)
+jobs:
+  e2e-smoke:
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+      - run: npx playwright install --with-deps
+      - run: npx playwright test --project=smoke
+        env:
+          ENV: staging
+
+  e2e-regression:
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - run: npx playwright test
+        env:
+          ENV: staging
+```
+
+**Allure raporlama** — Her run'dan trend grafikleri ve failure ekran görüntüleri Slack'e iletiliyor.
+
+## Sonuç
+
+| Metrik | Öncesi | Sonrası |
+|---|---|---|
+| Regresyon süresi | 3-4 gün | 45 dk |
+| Test coverage (kritik akışlar) | %0 | %87 |
+| Production bug'ları (aylık ortalama) | 6-8 | 1-2 |
+| Deployment güveni | Düşük | Yüksek |
+
+Sprint kapasitesinde geri kazanılan zaman, ekibin yeni özellik geliştirmeye odaklanmasını sağladı.
+
+## Öğrendiklerim
+
+- **Selector stabilitesi kritik:** `data-testid` attribute'larını geliştirme aşamasında product ekibiyle birlikte tanımlamak, sonradan "bu element neden kırıldı?" sorusunu ortadan kaldırıyor.
+- **Flaky testleri hemen çözün:** "Bazen geçiyor" kabul edilebilir bir durum değil. İlk haftada 3 flaky test çıktı; köke inip çözmek 2 gün aldı ama bu disiplin ilerleyen aylarda karşılığını verdi.
+- **Raporlama olmadan otomasyon yarım kalır:** Test geçiyor diye güvenmek değil, trend görmek önemli. Coverage'ın düştüğü sprint'leri Allure grafikleriyle tespit ettim.

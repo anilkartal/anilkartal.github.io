@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "inverse-on-surface": "#eaf1ff",
+                "on-secondary-container": "#5c647a",
+                "on-background": "#0b1c30",
+                "surface-variant": "#d3e4fe",
+                "on-primary-container": "#efefff",
+                "on-error-container": "#93000a",
+                "tertiary": "#993100",
+                "inverse-surface": "#213145",
+                "inverse-primary": "#b8c3ff",
+                "primary-container": "#2d5bff",
+                "surface-container-highest": "#d3e4fe",
+                "outline-variant": "#c4c5d9",
+                "surface-container-high": "#dce9ff",
+                "surface-container": "#e5eeff",
+                "on-primary-fixed-variant": "#0035bd",
+                "on-tertiary-fixed-variant": "#812900",
+                "on-secondary-fixed": "#131b2e",
+                "surface-dim": "#cbdbf5",
+                "on-primary": "#ffffff",
+                "secondary-fixed-dim": "#bec6e0",
+                "on-surface": "#0b1c30",
+                "on-tertiary-container": "#ffece6",
+                "on-primary-fixed": "#001355",
+                "secondary-fixed": "#dae2fd",
+                "on-secondary": "#ffffff",
+                "surface-container-low": "#eff4ff",
+                "background": "#f8f9ff",
+                "on-tertiary": "#ffffff",
+                "on-secondary-fixed-variant": "#3f465c",
+                "surface-container-lowest": "#ffffff",
+                "secondary-container": "#dae2fd",
+                "error-container": "#ffdad6",
+                "on-error": "#ffffff",
+                "primary-fixed-dim": "#b8c3ff",
+                "error": "#ba1a1a",
+                "tertiary-fixed-dim": "#ffb59b",
+                "outline": "#747688",
+                "surface-tint": "#104af0",
+                "surface": "#f8f9ff",
+                "surface-bright": "#f8f9ff",
+                "on-surface-variant": "#434656",
+                "primary-fixed": "#dde1ff",
+                "tertiary-container": "#c24100",
+                "primary": "#0040df",
+                "on-tertiary-fixed": "#380d00",
+                "secondary": "#565e74",
+                "tertiary-fixed": "#ffdbcf"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "container-max": "1280px",
+                "margin-mobile": "16px",
+                "unit": "8px",
+                "gutter": "24px",
+                "margin-desktop": "64px",
+                "section-gap": "120px"
+        },
+        "fontFamily": {
+                "body-sm": [
+                        "geist"
+                ],
+                "headline-xl": [
+                        "geist"
+                ],
+                "headline-lg": [
+                        "geist"
+                ],
+                "label-caps": [
+                        "geist"
+                ],
+                "mono-data": [
+                        "jetbrainsMono"
+                ],
+                "headline-lg-mobile": [
+                        "geist"
+                ],
+                "body-md": [
+                        "geist"
+                ],
+                "code-sm": ["JetBrains Mono"],
+                "body-lg": ["geist"],
+                "headline-md": ["geist"]
+        },
+        "fontSize": {
+                "body-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "1.5",
+                                "letterSpacing": "0",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-xl": [
+                        "48px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "label-caps": [
+                        "12px",
+                        {
+                                "lineHeight": "1",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "mono-data": [
+                        "13px",
+                        {
+                                "lineHeight": "1.4",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "24px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.6",
+                                "letterSpacing": "0",
+                                "fontWeight": "400"
+                        }
+                ],
+                "code-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "headline-md": ["28px", {"lineHeight": "1.3", "fontWeight": "600"}]
+        }
+},
+    },
+  }
+</script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .glow-accent {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(45, 91, 255, 0.08) 0%, transparent 70%);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-surface-bright text-on-surface font-body-md overflow-x-hidden">
+<!-- Header / TopNavBar -->
+<header class="sticky top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/50 shadow-sm shadow-primary/5">
+<nav class="flex justify-between items-center max-w-container-max mx-auto px-gutter h-20">
+<div class="flex items-center gap-4">
+<div class="font-code-sm text-code-sm font-bold tracking-tighter text-primary border border-primary/20 px-2 py-1 rounded bg-white/50">
+                QualityExpert.sh
+            </div>
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-700 font-label-caps text-[10px]">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                AVAILABLE FOR HIRE
+            </div>
+</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-300" href="#">Projects</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-300" href="#">Testing Blog</a>
+<a class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1" href="#">Experience</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-300" href="#">Stack</a>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-caps text-label-caps hover:bg-primary/90 transition-all duration-200 active:scale-95 shadow-sm">
+                Get Audit
+            </button>
+</nav>
+</header>
+<main class="max-w-container-max mx-auto px-gutter relative">
+<div class="glow-accent -top-20 -left-20"></div>
+<div class="glow-accent top-[40%] -right-20"></div>
+<!-- Hero: Personal Story & Philosophy -->
+<section class="pt-section-gap mb-section-gap grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+<div class="space-y-6">
+<span class="font-label-caps text-label-caps text-tertiary tracking-[0.2em]">01 // IDENTITY</span>
+<h1 class="font-headline-xl text-headline-xl text-on-surface">The architect of <span class="text-primary">unbreakable</span> software systems.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                    Quality isn't a phase; it's a culture. My journey started in the trenches of manual testing, where I realized that the true bottleneck wasn't speed—it was trust. Over the last decade, I've dedicated my career to building automated verification frameworks that act as the immune system for large-scale enterprise applications.
+                </p>
+</div>
+<div class="glass-card p-10 rounded-xl space-y-6 border-l-4 border-l-primary">
+<h2 class="font-headline-md text-headline-md text-on-surface">Engineering Philosophy</h2>
+<div class="space-y-6">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="terminal">terminal</span>
+<div>
+<p class="font-label-caps text-label-caps text-primary mb-2 tracking-wider">01. AUTOMATE BY DESIGN</p>
+<p class="text-on-surface-variant text-body-sm leading-relaxed">If it's repeatable, it belongs in the CI pipeline. Manual effort is strictly reserved for exploratory testing and creative edge-case discovery, never regression.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="biotech">biotech</span>
+<div>
+<p class="font-label-caps text-label-caps text-primary mb-2 tracking-wider">02. DATA-DRIVEN VALIDATION</p>
+<p class="text-on-surface-variant text-body-sm leading-relaxed">Metrics are the only source of truth. Flaky tests are treated as critical infrastructure bugs, quarantined immediately, and refactored for absolute determinism.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="shield">shield</span>
+<div>
+<p class="font-label-caps text-label-caps text-primary mb-2 tracking-wider">03. SHIFT LEFT EVERYTHING</p>
+<p class="text-on-surface-variant text-body-sm leading-relaxed">Integrating security (SAST/DAST) and performance profiling at the earliest PR commit prevents expensive late-stage architectural failures.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Career Journey: Timeline -->
+<section class="mb-section-gap">
+<div class="mb-16 text-center">
+<span class="font-label-caps text-label-caps text-tertiary tracking-[0.2em]">02 // EVOLUTION</span>
+<h2 class="font-headline-lg text-headline-lg mt-4">Professional Timeline</h2>
+</div>
+<div class="relative border-l-2 border-outline/40 ml-4 md:ml-0 md:flex md:flex-col items-center">
+<!-- Role 1 -->
+<div class="mb-16 md:w-full md:grid md:grid-cols-2 md:gap-24 relative group">
+<div class="hidden md:flex justify-end pt-2">
+<div class="text-right">
+<span class="font-code-sm text-code-sm text-primary block mb-1">2021 — PRESENT</span>
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors">Lead QA Strategist</h3>
+<p class="font-label-caps text-label-caps text-tertiary mt-2">TechFlow Solutions</p>
+</div>
+</div>
+<div class="absolute left-[-9px] md:left-1/2 md:ml-[-9px] w-4 h-4 rounded-full bg-primary border-2 border-surface-bright shadow-[0_0_15px_rgba(45,91,255,0.6)] z-10"></div>
+<div class="pl-8 md:pl-0">
+<div class="md:hidden mb-4">
+<span class="font-code-sm text-code-sm text-primary block mb-1">2021 — PRESENT</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Lead QA Strategist</h3>
+<p class="font-label-caps text-label-caps text-tertiary mt-2">TechFlow Solutions</p>
+</div>
+<div class="glass-card p-8 rounded-xl hover:-translate-y-1 transition-transform duration-300">
+<p class="text-on-surface-variant mb-6 leading-relaxed">Architected a highly concurrent, multi-tier automation framework reducing core regression execution time by 75%. Established quality gates in CI/CD pipelines blocking 99.8% of critical bugs from reaching production.</p>
+<ul class="space-y-2 mb-6 text-body-sm text-on-surface-variant">
+<li class="flex gap-2 items-start"><span class="text-primary font-bold">›</span> Mentored a team of 12 engineers, standardizing Playwright adoption.</li>
+<li class="flex gap-2 items-start"><span class="text-primary font-bold">›</span> Implemented visual regression testing using Percy, saving 40hrs/week.</li>
+</ul>
+<div class="flex flex-wrap gap-2">
+<span class="bg-primary/10 text-primary font-code-sm text-[11px] px-3 py-1.5 rounded-full border border-primary/20">PLAYWRIGHT</span>
+<span class="bg-primary/10 text-primary font-code-sm text-[11px] px-3 py-1.5 rounded-full border border-primary/20">GITHUB ACTIONS</span>
+<span class="bg-primary/10 text-primary font-code-sm text-[11px] px-3 py-1.5 rounded-full border border-primary/20">KUBERNETES</span>
+<span class="bg-surface-variant text-on-surface font-code-sm text-[11px] px-3 py-1.5 rounded-full border border-outline-variant/30">TYPESCRIPT</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Role 2 -->
+<div class="mb-16 md:w-full md:grid md:grid-cols-2 md:gap-24 relative group">
+<div class="order-2 pl-8 md:pl-0 pt-2">
+<div class="hidden md:block">
+<span class="font-code-sm text-code-sm text-on-surface-variant block mb-1">2018 — 2021</span>
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors">Senior Automation Engineer</h3>
+<p class="font-label-caps text-label-caps text-tertiary mt-2">Nebula Systems</p>
+</div>
+</div>
+<div class="absolute left-[-9px] md:left-1/2 md:ml-[-9px] w-4 h-4 rounded-full bg-surface-container-high border-2 border-outline z-10 group-hover:border-primary transition-colors"></div>
+<div class="order-1 pr-0 md:pr-0 pl-8 md:pl-0">
+<div class="md:hidden mb-4">
+<span class="font-code-sm text-code-sm text-on-surface-variant block mb-1">2018 — 2021</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Senior Automation Engineer</h3>
+<p class="font-label-caps text-label-caps text-tertiary mt-2">Nebula Systems</p>
+</div>
+<div class="glass-card p-8 rounded-xl hover:-translate-y-1 transition-transform duration-300">
+<p class="text-on-surface-variant mb-6 leading-relaxed">Designed scalable API testing suites for a complex microservices architecture handling 1M+ daily requests. Implemented chaos engineering principles to proactively test system resilience under load.</p>
+<ul class="space-y-2 mb-6 text-body-sm text-on-surface-variant">
+<li class="flex gap-2 items-start"><span class="text-primary font-bold">›</span> Built a custom Pytest framework integrated with AWS Device Farm.</li>
+<li class="flex gap-2 items-start"><span class="text-primary font-bold">›</span> Reduced test flakiness from 15% to &lt;2% through strict isolation.</li>
+</ul>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-variant text-on-surface font-code-sm text-[11px] px-3 py-1.5 rounded-full border border-outline-variant/30">PYTHON</span>
+<span class="bg-surface-variant text-on-surface font-code-sm text-[11px] px-3 py-1.5 rounded-full border border-outline-variant/30">PYTEST</span>
+<span class="bg-surface-variant text-on-surface font-code-sm text-[11px] px-3 py-1.5 rounded-full border border-outline-variant/30">AWS</span>
+<span class="bg-surface-variant text-on-surface font-code-sm text-[11px] px-3 py-1.5 rounded-full border border-outline-variant/30">DOCKER</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Skills Matrix: Bento Grid -->
+<section class="mb-section-gap">
+<div class="mb-12">
+<span class="font-label-caps text-label-caps text-tertiary tracking-[0.2em]">03 // CAPABILITIES</span>
+<h2 class="font-headline-lg text-headline-lg mt-4">Expertise Clusters</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Automation -->
+<div class="glass-card p-8 rounded-xl md:col-span-2 border-t-4 border-t-primary">
+<div class="flex items-center gap-4 mb-8">
+<div class="p-3 bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="auto_settings">settings_suggest</span>
+</div>
+<h3 class="font-headline-md text-headline-md">Core Automation</h3>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+<div class="space-y-3">
+<div class="flex justify-between items-center mb-1">
+<p class="font-label-caps text-label-caps text-on-surface-variant">WEB E2E</p>
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">EXPERT</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-1.5 mb-2"><div class="bg-primary h-1.5 rounded-full" style="width: 95%"></div></div>
+<p class="text-on-surface font-code-sm text-sm">Playwright, Cypress, Selenium</p>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center mb-1">
+<p class="font-label-caps text-label-caps text-on-surface-variant">MOBILE</p>
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">ADVANCED</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-1.5 mb-2"><div class="bg-primary h-1.5 rounded-full" style="width: 80%"></div></div>
+<p class="text-on-surface font-code-sm text-sm">Appium, Espresso, XCUITest</p>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center mb-1">
+<p class="font-label-caps text-label-caps text-on-surface-variant">API &amp; PERF</p>
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">EXPERT</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-1.5 mb-2"><div class="bg-primary h-1.5 rounded-full" style="width: 90%"></div></div>
+<p class="text-on-surface font-code-sm text-sm">k6, Postman, RestAssured</p>
+</div>
+</div>
+</div>
+<!-- AI & Innovation -->
+<div class="glass-card p-8 rounded-xl bg-gradient-to-br from-primary/5 to-transparent border-t-4 border-t-tertiary">
+<div class="flex flex-col gap-6">
+<div class="p-3 bg-tertiary/10 rounded-lg w-fit">
+<span class="material-symbols-outlined text-tertiary text-3xl" data-icon="psychology">psychology</span>
+</div>
+<h3 class="font-headline-md text-headline-md">AI &amp; Innovation</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Implementing LLM-based test generation and visual regression testing using AI-driven heuristic analysis to detect anomalies traditional assertions miss.</p>
+</div>
+</div>
+<!-- DevOps -->
+<div class="glass-card p-8 rounded-xl border-t-4 border-t-secondary">
+<div class="flex flex-col gap-6">
+<div class="p-3 bg-secondary/10 rounded-lg w-fit">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="cloud_done">cloud_done</span>
+</div>
+<h3 class="font-headline-md text-headline-md">CI/CD &amp; Infrastructure</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Jenkins, GitHub Actions, Docker, Kubernetes. Architecting resilient pipelines with strict quality gates and automated rollback mechanisms.</p>
+</div>
+</div>
+<!-- Culture -->
+<div class="glass-card p-8 rounded-xl md:col-span-2 border-t-4 border-t-outline">
+<div class="flex items-center gap-4 mb-6">
+<div class="p-3 bg-outline/10 rounded-lg">
+<span class="material-symbols-outlined text-on-surface text-3xl" data-icon="groups">groups</span>
+</div>
+<h3 class="font-headline-md text-headline-md">Culture &amp; Leadership</h3>
+</div>
+<p class="text-on-surface-variant max-w-2xl leading-relaxed">Championing the "Quality First" mindset. Specialized in transforming legacy QA teams into high-velocity Engineering Productivity units through rigorous training, process optimization, and establishing centers of excellence.</p>
+</div>
+</div>
+</section>
+<!-- Certifications & Education -->
+<section class="mb-section-gap grid grid-cols-1 md:grid-cols-2 gap-12">
+<div>
+<span class="font-label-caps text-label-caps text-tertiary tracking-[0.2em]">04 // CREDENTIALS</span>
+<h2 class="font-headline-md text-headline-md mt-4 mb-8">Education</h2>
+<div class="space-y-6">
+<div class="glass-card p-6 rounded-xl border border-outline-variant/50 relative overflow-hidden">
+<div class="absolute right-0 top-0 w-24 h-24 bg-primary/5 rounded-bl-full -z-10"></div>
+<div class="flex gap-5 items-start">
+<div class="p-4 rounded-xl bg-surface shadow-sm border border-outline-variant/20 flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="school">school</span>
+</div>
+<div>
+<h4 class="font-headline-md text-[22px] text-on-surface mb-1">B.Sc. in Computer Science</h4>
+<p class="text-on-surface-variant font-medium">Stanford University</p>
+<p class="text-outline text-sm mb-3">2014 — 2018</p>
+<div class="inline-block px-3 py-1 bg-surface-container-high rounded text-primary font-code-sm text-xs font-medium border border-primary/10">
+                            Specialization in Software Reliability
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-tertiary tracking-[0.2em]">05 // VALIDATION</span>
+<h2 class="font-headline-md text-headline-md mt-4 mb-8">Official Certifications</h2>
+<div class="grid grid-cols-1 gap-4">
+<div class="glass-card p-5 rounded-xl border border-outline-variant/50 flex justify-between items-center group hover:border-primary/30 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface flex items-center justify-center border border-outline-variant/30 shadow-sm">
+<span class="material-symbols-outlined text-on-surface text-xl" data-icon="workspace_premium">workspace_premium</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface font-bold tracking-wide">ISTQB ADVANCED TEST MANAGER</span>
+</div>
+<span class="material-symbols-outlined text-tertiary group-hover:scale-110 transition-transform" data-icon="verified">verified</span>
+</div>
+<div class="glass-card p-5 rounded-xl border border-outline-variant/50 flex justify-between items-center group hover:border-primary/30 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface flex items-center justify-center border border-outline-variant/30 shadow-sm">
+<span class="material-symbols-outlined text-on-surface text-xl" data-icon="cloud">cloud</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface font-bold tracking-wide">AWS CERTIFIED SOLUTIONS ARCHITECT</span>
+</div>
+<span class="material-symbols-outlined text-tertiary group-hover:scale-110 transition-transform" data-icon="verified">verified</span>
+</div>
+<div class="glass-card p-5 rounded-xl border border-outline-variant/50 flex justify-between items-center group hover:border-primary/30 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface flex items-center justify-center border border-outline-variant/30 shadow-sm">
+<span class="material-symbols-outlined text-on-surface text-xl" data-icon="dns">dns</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface font-bold tracking-wide">CERTIFIED KUBERNETES ADMINISTRATOR</span>
+</div>
+<span class="material-symbols-outlined text-tertiary group-hover:scale-110 transition-transform" data-icon="verified">verified</span>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="mb-section-gap">
+<div class="glass-card p-12 rounded-3xl text-center relative overflow-hidden bg-white/80 border border-primary/10">
+<div class="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent -z-10"></div>
+<h2 class="font-headline-lg text-headline-lg mb-6">Ready to secure your deployment pipeline?</h2>
+<p class="text-on-surface-variant mb-10 max-w-2xl mx-auto font-body-lg">Whether you need a full quality audit or a lead to build your automation strategy from the ground up, let's talk about building something unbreakable.</p>
+<div class="flex flex-col md:flex-row gap-4 justify-center">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-label-caps text-label-caps flex items-center justify-center gap-2 hover:shadow-lg hover:-translate-y-0.5 transition-all active:scale-95 shadow-primary/20 shadow-md">
+<span class="material-symbols-outlined" data-icon="download">download</span> DOWNLOAD CV
+                    </button>
+<button class="border border-outline/30 bg-surface-container-lowest text-on-surface px-8 py-4 rounded-full font-label-caps text-label-caps flex items-center justify-center gap-2 hover:bg-surface-container-low hover:-translate-y-0.5 transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined" data-icon="link">link</span> CONNECT ON LINKEDIN
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low w-full py-section-gap border-t border-outline-variant/20">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto px-gutter gap-unit">
+<div class="font-headline-md text-[20px] font-bold text-on-surface">QualityExpert.sh</div>
+<div class="flex gap-8 my-8 md:my-0">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">Source Code</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">LinkedIn</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy</a>
+</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant text-center md:text-right">
+                © 2024 QualityExpert.sh // Precision in Every Commit
+            </div>
+</div>
+</footer>
+</body></html>

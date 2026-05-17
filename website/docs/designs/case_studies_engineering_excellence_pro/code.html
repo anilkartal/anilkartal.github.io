@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "surface": "#f8f9ff",
+                "error-container": "#ffdad6",
+                "tertiary": "#993100",
+                "on-primary-fixed": "#001355",
+                "on-tertiary-fixed-variant": "#812900",
+                "surface-dim": "#cbdbf5",
+                "surface-container-highest": "#d3e4fe",
+                "surface-container-high": "#dce9ff",
+                "on-surface-variant": "#434656",
+                "on-tertiary-fixed": "#380d00",
+                "surface-container-lowest": "#ffffff",
+                "tertiary-container": "#c24100",
+                "primary": "#0040df",
+                "on-secondary-container": "#5c647a",
+                "on-error-container": "#93000a",
+                "background": "#f8f9ff",
+                "secondary-container": "#dae2fd",
+                "primary-fixed-dim": "#b8c3ff",
+                "on-error": "#ffffff",
+                "primary-container": "#2d5bff",
+                "inverse-surface": "#213145",
+                "surface-container-low": "#eff4ff",
+                "on-primary-container": "#efefff",
+                "primary-fixed": "#dde1ff",
+                "inverse-primary": "#b8c3ff",
+                "error": "#ba1a1a",
+                "surface-container": "#e5eeff",
+                "on-tertiary": "#ffffff",
+                "on-background": "#0b1c30",
+                "secondary-fixed": "#dae2fd",
+                "on-secondary-fixed": "#131b2e",
+                "secondary": "#565e74",
+                "on-secondary": "#ffffff",
+                "on-primary-fixed-variant": "#0035bd",
+                "surface-bright": "#f8f9ff",
+                "outline": "#747688",
+                "outline-variant": "#c4c5d9",
+                "on-secondary-fixed-variant": "#3f465c",
+                "on-surface": "#0b1c30",
+                "inverse-on-surface": "#eaf1ff",
+                "tertiary-fixed": "#ffdbcf",
+                "on-tertiary-container": "#ffece6",
+                "secondary-fixed-dim": "#bec6e0",
+                "on-primary": "#ffffff",
+                "surface-tint": "#104af0",
+                "tertiary-fixed-dim": "#ffb59b",
+                "surface-variant": "#d3e4fe"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "unit": "8px",
+                "gutter": "24px",
+                "container-max": "1280px",
+                "margin-mobile": "16px",
+                "margin-desktop": "64px"
+        },
+        "fontFamily": {
+                "headline-lg-mobile": [
+                        "geist"
+                ],
+                "body-md": [
+                        "geist"
+                ],
+                "mono-data": [
+                        "jetbrainsMono"
+                ],
+                "headline-lg": [
+                        "geist"
+                ],
+                "body-sm": [
+                        "geist"
+                ],
+                "label-caps": [
+                        "geist"
+                ],
+                "headline-xl": [
+                        "geist"
+                ]
+        },
+        "fontSize": {
+                "headline-lg-mobile": [
+                        "24px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.6",
+                                "letterSpacing": "0",
+                                "fontWeight": "400"
+                        }
+                ],
+                "mono-data": [
+                        "13px",
+                        {
+                                "lineHeight": "1.4",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "1.5",
+                                "letterSpacing": "0",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-caps": [
+                        "12px",
+                        {
+                                "lineHeight": "1",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-xl": [
+                        "48px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        body {
+            background-color: #f8f9ff;
+            background-image: radial-gradient(circle at 2px 2px, rgba(11, 28, 48, 0.05) 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+        .whitepaper-card {
+            background: #ffffff;
+            border: 1px solid rgba(196, 197, 217, 0.6);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease-in-out;
+        }
+        .whitepaper-card:hover {
+            border-color: #0040df;
+            box-shadow: 0 10px 15px -3px rgba(0, 64, 223, 0.1), 0 4px 6px -2px rgba(0, 64, 223, 0.05);
+        }
+        .data-bar {
+            height: 4px;
+            background: #e5eeff;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .data-fill {
+            height: 100%;
+            background: #0040df;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="text-on-surface antialiased bg-surface-bright">
+<!-- Top Navigation Shell -->
+<nav class="sticky top-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-gutter h-16">
+<div class="font-mono-data text-mono-data font-bold tracking-tighter text-primary border border-primary/20 px-2 py-1 bg-white">
+                QualityExpert.sh
+            </div>
+<div class="hidden md:flex gap-6 items-center">
+<a class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1" href="#">Audits</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors" href="#">Methodology</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors" href="#">Metrics</a>
+</div>
+<button class="bg-primary text-white px-4 py-1.5 font-label-caps text-label-caps hover:bg-primary/90 transition-colors">
+                Request Audit
+            </button>
+</div>
+</nav>
+<main class="max-w-container-max mx-auto px-gutter py-12">
+<!-- Header Section -->
+<header class="mb-12 max-w-4xl border-b border-outline-variant/30 pb-8">
+<div class="flex items-center gap-2 mb-4">
+<span class="w-8 h-[2px] bg-primary"></span>
+<span class="font-label-caps text-label-caps text-primary uppercase tracking-widest">Technical Whitepapers</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-4">
+                Architecture Audits &amp; <span class="text-primary">System Resilience</span>
+</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+                Detailed technical breakdowns of performance engineering, automated resilience, and the pursuit of zero-defect deployment pipelines.
+            </p>
+<!-- Filter Navigation -->
+<div class="mt-8 flex flex-wrap gap-2">
+<button class="px-4 py-1.5 bg-primary text-white font-mono-data text-xs border border-primary">All Audits</button>
+<button class="px-4 py-1.5 bg-white text-on-surface-variant hover:text-primary font-mono-data text-xs border border-outline-variant/50 hover:border-primary/50 transition-colors">CI/CD Pipeline</button>
+<button class="px-4 py-1.5 bg-white text-on-surface-variant hover:text-primary font-mono-data text-xs border border-outline-variant/50 hover:border-primary/50 transition-colors">Telemetry</button>
+<button class="px-4 py-1.5 bg-white text-on-surface-variant hover:text-primary font-mono-data text-xs border border-outline-variant/50 hover:border-primary/50 transition-colors">Infrastructure</button>
+</div>
+</header>
+<!-- Projects Grid - Technical Audit Style -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Audit Card 1: Automated Quality Guardrails -->
+<div class="whitepaper-card p-6 flex flex-col">
+<div class="flex justify-between items-start mb-4 border-b border-outline-variant/20 pb-4">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="policy">policy</span>
+<span class="font-mono-data text-[10px] text-primary bg-primary/5 px-1.5 py-0.5 border border-primary/20">AUDIT-001</span>
+</div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Automated Quality Guardrails</h3>
+</div>
+<span class="font-mono-data text-[10px] bg-error-container text-error px-2 py-1 border border-error/20 uppercase">Critical Priority</span>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant mb-1">Architecture</p>
+<div class="flex items-center gap-1 text-sm font-mono-data text-on-surface">
+<span class="material-symbols-outlined text-sm">account_tree</span> Pre-merge verification
+                            </div>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant mb-1">Tech Stack</p>
+<div class="flex items-center gap-1 text-sm font-mono-data text-on-surface">
+<span class="material-symbols-outlined text-sm">code</span> TS, Playwright, GHA
+                            </div>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6 flex-grow border-l-2 border-outline-variant/30 pl-3">
+                        Engineered a pre-merge verification engine that blocks regressions before they reach the main branch, integrating deep binary analysis with test coverage metrics.
+                    </p>
+<div class="bg-surface-container-low p-4 border border-outline-variant/20 mb-6">
+<h4 class="font-label-caps text-[10px] text-on-surface-variant mb-3">Technical Metrics</h4>
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-xs font-mono-data mb-1">
+<span>Regression Time</span>
+<span class="text-primary font-bold">-60%</span>
+</div>
+<div class="data-bar"><div class="data-fill" style="width: 60%;"></div></div>
+</div>
+<div>
+<div class="flex justify-between text-xs font-mono-data mb-1">
+<span>CI Speed</span>
+<span class="text-primary font-bold">+45%</span>
+</div>
+<div class="data-bar"><div class="data-fill" style="width: 45%;"></div></div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-outline-variant/20">
+<a class="flex items-center gap-1.5 font-mono-data text-[11px] text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[14px]">terminal</span> View Source
+                    </a>
+<a class="flex items-center gap-1.5 font-mono-data text-[11px] text-primary hover:text-primary-container transition-colors" href="#">
+                        Read Audit Report <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Audit Card 2: Performance Profiler SDK -->
+<div class="whitepaper-card p-6 flex flex-col">
+<div class="flex justify-between items-start mb-4 border-b border-outline-variant/20 pb-4">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-tertiary text-xl" data-icon="memory">memory</span>
+<span class="font-mono-data text-[10px] text-tertiary bg-tertiary/5 px-1.5 py-0.5 border border-tertiary/20">AUDIT-002</span>
+</div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Performance Profiler SDK</h3>
+</div>
+<span class="font-mono-data text-[10px] bg-tertiary/10 text-tertiary px-2 py-1 border border-tertiary/20 uppercase">Optimization</span>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant mb-1">Architecture</p>
+<div class="flex items-center gap-1 text-sm font-mono-data text-on-surface">
+<span class="material-symbols-outlined text-sm">hub</span> Distributed Telemetry
+                            </div>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant mb-1">Tech Stack</p>
+<div class="flex items-center gap-1 text-sm font-mono-data text-on-surface">
+<span class="material-symbols-outlined text-sm">code</span> Go, gRPC, Prometheus
+                            </div>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6 flex-grow border-l-2 border-outline-variant/30 pl-3">
+                        A low-overhead telemetry library designed for real-time memory leak detection and CPU profiling in microservice environments.
+                    </p>
+<div class="bg-surface-container-low p-4 border border-outline-variant/20 mb-6">
+<h4 class="font-label-caps text-[10px] text-on-surface-variant mb-3">Technical Metrics</h4>
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-xs font-mono-data mb-1">
+<span>Cloud Spend</span>
+<span class="text-tertiary font-bold">-40%</span>
+</div>
+<div class="data-bar"><div class="data-fill bg-tertiary" style="width: 40%;"></div></div>
+</div>
+<div>
+<div class="flex justify-between text-xs font-mono-data mb-1">
+<span>Overhead</span>
+<span class="text-tertiary font-bold">&lt; 1%</span>
+</div>
+<div class="data-bar"><div class="data-fill bg-tertiary" style="width: 95%;"></div></div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-outline-variant/20">
+<a class="flex items-center gap-1.5 font-mono-data text-[11px] text-on-surface-variant hover:text-tertiary transition-colors" href="#">
+<span class="material-symbols-outlined text-[14px]">terminal</span> View Source
+                    </a>
+<a class="flex items-center gap-1.5 font-mono-data text-[11px] text-tertiary hover:text-tertiary-container transition-colors" href="#">
+                        Read Audit Report <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Large Featured Audit (Spans full width) -->
+<div class="whitepaper-card lg:col-span-2">
+<div class="flex flex-col lg:flex-row h-full">
+<div class="p-8 lg:w-1/2 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-outline-variant/20">
+<div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary text-xl" data-icon="cloud_sync">cloud_sync</span>
+<span class="font-mono-data text-[10px] text-secondary bg-secondary/5 px-1.5 py-0.5 border border-secondary/20">AUDIT-003</span>
+<span class="ml-auto font-mono-data text-[10px] bg-secondary/10 text-secondary px-2 py-1 border border-secondary/20 uppercase">Infrastructure</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg mb-4 text-on-surface">Ephemeral Testing Environments</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 border-l-2 border-outline-variant/30 pl-4">
+                                A custom orchestration layer that provisions fully-isolated Kubernetes namespaces for every Pull Request, including database seeding and mock API configurations. This allows for true end-to-end testing in production-like isolation.
+                            </p>
+<div class="grid grid-cols-2 gap-6 mb-8">
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant mb-1">Architecture</p>
+<div class="flex items-center gap-2 text-sm font-mono-data text-on-surface">
+<span class="material-symbols-outlined text-sm">dns</span> K8s Orchestration
+                                    </div>
+</div>
+<div>
+<p class="font-label-caps text-[10px] text-on-surface-variant mb-1">Tech Stack</p>
+<div class="flex items-center gap-2 text-sm font-mono-data text-on-surface">
+<span class="material-symbols-outlined text-sm">code</span> K8s, Terraform, Helm
+                                    </div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-6 border-t border-outline-variant/20">
+<a class="flex items-center gap-2 font-mono-data text-xs text-on-surface-variant border border-outline-variant/50 px-4 py-2 hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">description</span> Architecture Diagram
+                            </a>
+<a class="flex items-center gap-2 font-mono-data text-xs text-white bg-secondary px-4 py-2 hover:bg-secondary/90 transition-colors" href="#">
+                                Full Case Study <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<div class="p-8 lg:w-1/2 bg-surface-container-lowest flex flex-col justify-center">
+<h4 class="font-label-caps text-[12px] text-on-surface-variant mb-6 border-b border-outline-variant/20 pb-2">System Metrics &amp; Reliability</h4>
+<div class="space-y-8">
+<div>
+<div class="flex justify-between items-end mb-2">
+<div>
+<div class="font-headline-lg-mobile text-secondary font-bold">45s</div>
+<div class="text-xs font-mono-data text-on-surface-variant">Environment Provisioning</div>
+</div>
+<span class="text-xs font-mono-data text-secondary border border-secondary/20 px-1 bg-secondary/5">-85%</span>
+</div>
+<div class="data-bar h-2"><div class="data-fill bg-secondary" style="width: 85%;"></div></div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-2">
+<div>
+<div class="font-headline-lg-mobile text-secondary font-bold">99.9%</div>
+<div class="text-xs font-mono-data text-on-surface-variant">Infrastructure Uptime</div>
+</div>
+<span class="text-xs font-mono-data text-secondary border border-secondary/20 px-1 bg-secondary/5">Target</span>
+</div>
+<div class="data-bar h-2"><div class="data-fill bg-secondary" style="width: 99.9%;"></div></div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-2">
+<div>
+<div class="font-headline-lg-mobile text-secondary font-bold">Zero</div>
+<div class="text-xs font-mono-data text-on-surface-variant">Environment Drift Incidents</div>
+</div>
+</div>
+<div class="data-bar h-2"><div class="data-fill bg-secondary" style="width: 100%;"></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Shell -->
+<footer class="w-full py-8 bg-surface-container-lowest border-t border-outline-variant/20 mt-12">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto px-gutter gap-4">
+<div class="flex flex-col gap-1">
+<div class="font-mono-data text-sm font-bold text-on-surface">QualityExpert.sh</div>
+<p class="font-mono-data text-[10px] text-on-surface-variant">© 2024 QualityExpert.sh // Technical Architecture Audits</p>
+</div>
+<div class="flex gap-6">
+<a class="font-mono-data text-xs text-on-surface-variant hover:text-primary transition-colors" href="#">Source Code</a>
+<a class="font-mono-data text-xs text-on-surface-variant hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="font-mono-data text-xs text-on-surface-variant hover:text-primary transition-colors" href="#">LinkedIn</a>
+</div>
+</div>
+</footer>
+</body></html>

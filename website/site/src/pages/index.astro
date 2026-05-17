@@ -1,0 +1,572 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionLabel from '@/components/astro/SectionLabel.astro';
+import TechTag from '@/components/astro/TechTag.astro';
+import { getCollection } from 'astro:content';
+import { site } from '@/data/site';
+import { formatDateShort } from '@/lib/utils';
+
+const allProjects = await getCollection('projects', ({ data }) => !data.draft);
+const featuredProjects = allProjects
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+const shownProjects = featuredProjects.length > 0
+  ? featuredProjects
+  : allProjects.sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+
+const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+function approxReadingTime(body: string | undefined) {
+  if (!body) return '3 dk okuma';
+  const words = body.trim().split(/\s+/).length;
+  const mins = Math.ceil(words / 200);
+  return `${mins} dk okuma`;
+}
+
+const expertiseClusters = [
+  {
+    title: 'Test Otomasyonu',
+    desc: 'Playwright ile E2E, API ve görsel regresyon testleri. Sıfırdan framework tasarımı ve sürdürülebilir test mimarisi.',
+    tags: ['Playwright', 'E2E', 'API Testing'],
+  },
+  {
+    title: 'TypeScript & Tooling',
+    desc: 'Tip güvenli test altyapıları, modüler sayfa nesne modelleri, CI/CD entegrasyonu ve gelişmiş raporlama.',
+    tags: ['TypeScript', 'CI/CD', 'Reporting'],
+  },
+  {
+    title: 'AI Destekli Test',
+    desc: 'Görsel regresyon, LLM destekli test üretimi, akıllı test bakımı ve AI destekli kalite süreçleri.',
+    tags: ['AI Testing', 'Visual Regression', 'LLM'],
+  },
+  {
+    title: 'Kalite & Süreç',
+    desc: 'Test kültürü oluşturma, kalite metrikleri, takım eğitimi ve mühendislik ekiplerinde kalite sahiplenme.',
+    tags: ['Quality', 'Metrics', 'Coaching'],
+  },
+];
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: site.role,
+  description: site.bio,
+  url: site.url,
+  email: `mailto:${site.email}`,
+  sameAs: [
+    site.social.github,
+    site.social.linkedin,
+    site.social.x,
+  ],
+};
+---
+
+<BaseLayout
+  title={`${site.name} — ${site.role}`}
+  description={site.bio}
+  schema={personSchema}
+>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero-label" data-reveal>{site.role}</p>
+      <h1 class="hero-title" data-reveal data-reveal-delay="1">{site.name}</h1>
+      <p class="hero-bio" data-reveal data-reveal-delay="2">{site.bio}</p>
+      <div class="hero-actions" data-reveal data-reveal-delay="3">
+        <a href="/projeler" class="btn btn-primary">Çalışmalarıma bak</a>
+        <a href="/iletisim" class="btn btn-secondary">İletişim</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 01 // ÖNE ÇIKAN ÇALIŞMALAR ─── -->
+  <section class="home-section">
+    <div class="container">
+      <SectionLabel number="01" label="Öne Çıkan Çalışmalar" />
+      <ul class="project-list">
+        {shownProjects.map((project, i) => (
+          <li class="project-row" data-reveal data-reveal-delay={String(i + 1) as "1" | "2" | "3"}>
+            <a href={`/projeler/${project.id}`} class="project-link">
+              <div class="project-link__left">
+                <span class="project-index">{String(i + 1).padStart(2, '0')}</span>
+                <div class="project-info">
+                  <div class="project-meta-row">
+                    <span class="project-year">{project.data.year}</span>
+                    <span class="project-role">{project.data.role}</span>
+                  </div>
+                  <h2 class="project-title">{project.data.title}</h2>
+                  <p class="project-desc">{project.data.description}</p>
+                </div>
+              </div>
+              <div class="project-tags">
+                {project.data.technologies.slice(0, 3).map((tech) => (
+                  <TechTag label={tech} />
+                ))}
+                {project.data.technologies.length > 3 && (
+                  <span class="project-tags-more">+{project.data.technologies.length - 3}</span>
+                )}
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="section-footer">
+        <a href="/projeler" class="more-link">Tüm çalışmalar →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 02 // SON YAZILAR ─── -->
+  <section class="home-section home-section--alt">
+    <div class="container">
+      <SectionLabel number="02" label="Son Yazılar" />
+      <ul class="post-list">
+        {recentPosts.map((post, i) => (
+          <li class="post-row" data-reveal data-reveal-delay={String(i + 1) as "1" | "2" | "3"}>
+            <a href={`/blog/${post.id}`} class="post-link">
+              <span class="post-date">{formatDateShort(post.data.date)}</span>
+              <span class="post-cat">{post.data.category}</span>
+              <span class="post-title">{post.data.title}</span>
+              <span class="post-time">{approxReadingTime(post.body)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="section-footer">
+        <a href="/blog" class="more-link">Tüm yazılar →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 03 // UZMANLIK ALANLARI ─── -->
+  <section class="home-section">
+    <div class="container">
+      <SectionLabel number="03" label="Uzmanlık Alanları" />
+      <div class="expertise-grid">
+        {expertiseClusters.map((cluster, i) => (
+          <div class="expertise-card" data-reveal data-reveal-delay={String(i + 1) as "1" | "2" | "3" | "4"}>
+            <h3 class="expertise-title">{cluster.title}</h3>
+            <p class="expertise-desc">{cluster.desc}</p>
+            <div class="expertise-tags">
+              {cluster.tags.map((tag) => <TechTag label={tag} />)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 04 // ŞU AN ─── -->
+  <section class="home-section home-section--alt">
+    <div class="container">
+      <SectionLabel number="04" label="Şu An" />
+      <div class="now-block">
+        <p class="now-text">{site.now}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ─── -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-inner">
+        <p class="cta-label">İletişim</p>
+        <h2 class="cta-title">Birlikte çalışmak<br />ister misiniz?</h2>
+        <p class="cta-sub">
+          Test otomasyonu, kalite stratejisi veya mühendislik konularında fikir alışverişi yapmaktan mutluluk duyarım.
+        </p>
+        <div class="cta-actions">
+          <a href="/iletisim" class="btn btn-primary">Yazın</a>
+          <a href="/hakkimda" class="btn btn-secondary">Hakkımda</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ─── Hero ─── */
+  .hero {
+    padding-block: var(--space-section-mobile) var(--space-section-mobile);
+    border-bottom: 1px solid var(--border);
+  }
+
+  @media (min-width: 1024px) {
+    .hero {
+      padding-block: var(--space-section-desktop) var(--space-section-desktop);
+    }
+  }
+
+  .hero-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--space-6);
+    line-height: 1;
+  }
+
+  .hero-title {
+    font-size: var(--text-hero);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+    color: var(--text);
+    margin-bottom: var(--space-6);
+    max-width: 16ch;
+  }
+
+  .hero-bio {
+    font-size: var(--text-lg);
+    color: var(--text-muted);
+    max-width: 48ch;
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-10);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  /* ─── Bölüm ortak ─── */
+  .home-section {
+    padding-block: var(--space-section-mobile);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .home-section--alt {
+    background-color: var(--bg-subtle);
+  }
+
+  @media (min-width: 1024px) {
+    .home-section {
+      padding-block: var(--space-section-desktop);
+    }
+  }
+
+  .section-footer {
+    margin-top: var(--space-10);
+  }
+
+  .more-link {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .more-link:hover {
+    color: var(--accent);
+  }
+
+  /* ─── Projeler listesi ─── */
+  .project-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-10) 0 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .project-row {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-link {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-8);
+    padding: var(--space-8) var(--space-3);
+    border-left: 2px solid transparent;
+    transition: border-color var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out),
+                padding-left var(--duration-fast) var(--ease-out);
+  }
+
+  .project-link:hover {
+    border-left-color: var(--accent);
+    background-color: var(--bg-subtle);
+    padding-left: var(--space-5);
+  }
+
+  .project-link__left {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-6);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .project-index {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-faint);
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+    margin-top: 3px;
+    line-height: 1;
+  }
+
+  .project-info { flex: 1; min-width: 0; }
+
+  .project-meta-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+
+  .project-year {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+
+  .project-role {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-faint);
+    letter-spacing: 0.03em;
+    line-height: 1;
+  }
+
+  .project-title {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text);
+    margin-bottom: var(--space-3);
+    line-height: var(--leading-snug);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .project-link:hover .project-title {
+    color: var(--accent);
+  }
+
+  .project-desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: var(--leading-relaxed);
+    max-width: 64ch;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: flex-start;
+    flex-shrink: 0;
+    padding-top: 3px;
+  }
+
+  .project-tags-more {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-faint);
+    line-height: 1;
+    align-self: center;
+  }
+
+  @media (max-width: 768px) {
+    .project-link {
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+    .project-tags { padding-top: 0; }
+  }
+
+  @media (max-width: 640px) {
+    .project-index { display: none; }
+  }
+
+  /* ─── Blog listesi ─── */
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-10) 0 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .post-row {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .post-link {
+    display: grid;
+    grid-template-columns: 7rem auto 1fr auto;
+    align-items: baseline;
+    gap: var(--space-4) var(--space-6);
+    padding: var(--space-5) var(--space-3);
+    border-left: 2px solid transparent;
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+  .post-link:hover {
+    border-left-color: var(--accent);
+    background-color: var(--bg-elevated);
+    padding-left: var(--space-5);
+  }
+
+  .post-date {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-faint);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .post-cat {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .post-title {
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--text);
+    line-height: var(--leading-snug);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .post-link:hover .post-title {
+    color: var(--accent);
+  }
+
+  .post-time {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-faint);
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 640px) {
+    .post-link {
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+    .post-time { display: none; }
+  }
+
+  /* ─── Uzmanlık kartları ─── */
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-1);
+    margin-top: var(--space-10);
+  }
+
+  @media (max-width: 768px) {
+    .expertise-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .expertise-card {
+    padding: var(--space-8);
+    border: 1px solid var(--border);
+    border-top: 1px solid var(--accent);
+    border-radius: var(--radius-lg);
+  }
+
+  .expertise-title {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: var(--space-3);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .expertise-desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-5);
+  }
+
+  .expertise-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  /* ─── Şu an ─── */
+  .now-block {
+    margin-top: var(--space-10);
+    padding: var(--space-8);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius-lg);
+    max-width: 64ch;
+  }
+
+  .now-text {
+    font-size: var(--text-lg);
+    color: var(--text-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ─── CTA ─── */
+  .cta-section {
+    padding-block: var(--space-section-mobile);
+  }
+
+  @media (min-width: 1024px) {
+    .cta-section {
+      padding-block: var(--space-section-desktop);
+    }
+  }
+
+  .cta-inner {
+    max-width: 52ch;
+  }
+
+  .cta-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: var(--space-6);
+    line-height: 1;
+  }
+
+  .cta-title {
+    font-size: clamp(2rem, 3.5vw + 0.5rem, 3rem);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+    color: var(--text);
+    margin-bottom: var(--space-6);
+  }
+
+  .cta-sub {
+    font-size: var(--text-base);
+    color: var(--text-muted);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-10);
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+</style>

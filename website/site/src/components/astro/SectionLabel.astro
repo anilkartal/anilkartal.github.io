@@ -1,0 +1,35 @@
+---
+interface Props {
+  number: string;
+  label: string;
+}
+
+const { number, label } = Astro.props;
+---
+
+<p class="section-label">
+  <span class="section-label__number">{number}</span>
+  <span class="section-label__sep">//</span>
+  <span class="section-label__text">{label}</span>
+</p>
+
+<style>
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: var(--space-6);
+    line-height: 1;
+  }
+
+  .section-label__sep {
+    color: var(--accent);
+    letter-spacing: normal;
+  }
+</style>

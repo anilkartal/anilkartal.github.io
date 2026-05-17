@@ -1,0 +1,101 @@
+/* ─── Renk Tokens ─── */
+:root {
+  --bg: #ffffff;
+  --bg-subtle: #fafafa;
+  --bg-elevated: #ffffff;
+  --text: #0a0a0a;
+  --text-muted: #525252;
+  --text-faint: #a3a3a3;
+  --border: #e5e5e5;
+  --border-strong: #d4d4d4;
+  --accent: #3b5bdb;
+  --accent-hover: #2f49b3;
+  --accent-bg: #eef1fb;
+  --code-bg: #f5f5f5;
+}
+
+[data-theme="dark"] {
+  --bg: #0a0a0a;
+  --bg-subtle: #111111;
+  --bg-elevated: #161616;
+  --text: #fafafa;
+  --text-muted: #a3a3a3;
+  --text-faint: #525252;
+  --border: #262626;
+  --border-strong: #404040;
+  --accent: #7c8fff;
+  --accent-hover: #9aa8ff;
+  --accent-bg: #1a1f3a;
+  --code-bg: #171717;
+}
+
+/* ─── Tipografi Tokens ─── */
+:root {
+  --font-sans: 'Geist Variable', 'Geist', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Boyut skalası */
+  --text-xs:   0.75rem;   /* 12px */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg:   1.125rem;  /* 18px */
+  --text-xl:   1.375rem;  /* 22px */
+  --text-2xl:  1.5rem;    /* 24px */
+  --text-3xl:  2rem;      /* 32px */
+  --text-hero: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+
+  /* Line-height */
+  --leading-tight:  1.1;
+  --leading-snug:   1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.6;
+  --leading-loose:  1.7;
+
+  /* Letter-spacing */
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide:   0.05em;
+  --tracking-wider:  0.1em;
+  --tracking-widest: 0.2em;
+}
+
+/* ─── Spacing Tokens ─── */
+:root {
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+  --space-20: 5rem;    /* 80px */
+  --space-24: 6rem;    /* 96px */
+  --space-section-mobile: 4rem;   /* 64px */
+  --space-section-desktop: 7.5rem; /* 120px */
+
+  /* Layout */
+  --content-max: 1200px;
+  --content-wide: 1280px;
+  --content-prose: 68ch;
+
+  /* Border radius */
+  --radius-sm: 2px;   /* etiket/rozet */
+  --radius-md: 4px;   /* buton */
+  --radius-lg: 6px;   /* kart */
+  --radius-xl: 8px;   /* büyük kart */
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* ─── Animasyon Tokens ─── */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+}
