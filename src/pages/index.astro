@@ -5,6 +5,7 @@ import TechTag from '@/components/astro/TechTag.astro';
 import { getCollection } from 'astro:content';
 import { site } from '@/data/site';
 import { formatDateShort } from '@/lib/utils';
+import { BadgeCheck } from '@lucide/astro';
 
 const allProjects = await getCollection('projects', ({ data }) => !data.draft);
 const featuredProjects = allProjects
@@ -75,6 +76,16 @@ const personSchema = {
   <section class="hero">
     <div class="container">
       <p class="hero-label" data-reveal>{site.role}</p>
+      <a
+        href="https://app.diplomasafe.com/en-US/diploma/d55a032f39de584b8f17db9442f5a64dad69c33bf"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hero-cert"
+        data-reveal
+      >
+        <BadgeCheck size={13} strokeWidth={2} class="hero-cert-icon" />
+        ISTQB® Certified Tester Foundation Level (CTFL)
+      </a>
       <h1 class="hero-title" data-reveal data-reveal-delay="1">{site.name}</h1>
       <p class="hero-bio" data-reveal data-reveal-delay="2">{site.bio}</p>
       <div class="hero-actions" data-reveal data-reveal-delay="3">
@@ -212,6 +223,34 @@ const personSchema = {
     color: var(--accent);
     margin-bottom: var(--space-6);
     line-height: 1;
+  }
+
+  .hero-cert {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--text-muted);
+    background-color: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.3em 0.7em;
+    margin-bottom: var(--space-5);
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .hero-cert:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .hero-cert-icon {
+    color: var(--accent);
+    flex-shrink: 0;
   }
 
   .hero-title {

@@ -10,7 +10,6 @@ import {
   Layers,
   GitBranch,
   Users,
-  GraduationCap,
   BadgeCheck,
   Cpu,
 } from '@lucide/astro';
@@ -107,20 +106,12 @@ const expertiseClusters = [
   },
 ];
 
-const education = [
-  {
-    degree: 'Bilgisayar Mühendisliği Lisans',
-    school: '[Üniversite Adı]',
-    period: '2014 — 2018',
-    specialization: 'Yazılım Mühendisliği',
-  },
-];
-
 const certifications = [
-  { name: 'ISTQB Advanced Test Manager' },
-  { name: 'Playwright Test Automation (LambdaTest)' },
-  { name: 'AWS Cloud Practitioner' },
-  { name: 'Professional Scrum Master I (Scrum.org)' },
+  {
+    name: 'ISTQB® Certified Tester Foundation Level (CTFL)',
+    url: 'https://app.diplomasafe.com/en-US/diploma/d55a032f39de584b8f17db9442f5a64dad69c33bf',
+    image: '/ISTQBsertifika.png',
+  },
 ];
 ---
 
@@ -250,45 +241,46 @@ const certifications = [
       </div>
     </section>
 
-    <!-- 04 // EĞİTİM + 05 // SERTİFİKALAR -->
+    <!-- 04 // SERTİFİKALAR -->
     <section class="section credentials-section">
       <div class="container">
-        <div class="credentials-grid">
-
-          <!-- Eğitim -->
-          <div>
-            <SectionLabel number="04" label="Eğitim" />
-            <div class="education-list">
-              {education.map((edu) => (
-                <div class="education-card">
-                  <div class="education-icon">
-                    <GraduationCap size={22} strokeWidth={1.5} />
-                  </div>
-                  <div>
-                    <h3 class="education-degree">{edu.degree}</h3>
-                    <p class="education-school">{edu.school}</p>
-                    <p class="education-period">{edu.period}</p>
-                    <span class="education-spec">{edu.specialization}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <!-- Sertifikalar -->
-          <div>
-            <SectionLabel number="05" label="Sertifikalar" />
-            <ul class="cert-list">
-              {certifications.map((cert) => (
-                <li class="cert-item">
-                  <span class="cert-name">{cert.name}</span>
-                  <BadgeCheck size={16} strokeWidth={1.5} class="cert-check" />
-                </li>
-              ))}
-            </ul>
-          </div>
-
-        </div>
+        <SectionLabel number="04" label="Sertifikalar" />
+        <ul class="cert-list">
+          {certifications.map((cert) => (
+            <li class="cert-item">
+              <a
+                href={cert.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="cert-link"
+              >
+                <span class="cert-name">{cert.name}</span>
+                <BadgeCheck size={16} strokeWidth={1.5} class="cert-check" />
+              </a>
+              {cert.image && (
+                <a
+                  href={cert.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="cert-preview"
+                  aria-label={`${cert.name} — sertifikayı doğrula`}
+                >
+                  <img
+                    src={cert.image}
+                    alt={`${cert.name} sertifikası`}
+                    class="cert-preview-img"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span class="cert-preview-overlay">
+                    <BadgeCheck size={20} strokeWidth={1.5} />
+                    Doğrula
+                  </span>
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
 
@@ -761,7 +753,7 @@ const certifications = [
     line-height: var(--leading-normal);
   }
 
-  /* ─── 04 EĞİTİM + 05 SERTİFİKALAR ─── */
+  /* ─── 04 SERTİFİKALAR ─── */
   .credentials-section {
     padding-top: var(--space-section-mobile);
   }
@@ -770,83 +762,6 @@ const certifications = [
     .credentials-section {
       padding-top: var(--space-section-desktop);
     }
-  }
-
-  .credentials-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-12);
-  }
-
-  @media (min-width: 768px) {
-    .credentials-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-16);
-    }
-  }
-
-  /* Eğitim */
-  .education-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-  }
-
-  .education-card {
-    display: flex;
-    gap: var(--space-5);
-    align-items: flex-start;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
-    background-color: var(--bg);
-  }
-
-  .education-icon {
-    flex-shrink: 0;
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    color: var(--accent);
-    background-color: var(--bg-subtle);
-  }
-
-  .education-degree {
-    font-size: var(--text-lg);
-    font-weight: 600;
-    letter-spacing: var(--tracking-tight);
-    color: var(--text);
-    margin-bottom: var(--space-1);
-    line-height: var(--leading-snug);
-  }
-
-  .education-school {
-    font-size: var(--text-sm);
-    color: var(--text-muted);
-    margin-bottom: var(--space-1);
-  }
-
-  .education-period {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--text-faint);
-    letter-spacing: 0.04em;
-    margin-bottom: var(--space-3);
-  }
-
-  .education-spec {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--accent);
-    background-color: var(--accent-bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 0.2em 0.6em;
-    letter-spacing: 0.04em;
   }
 
   /* Sertifikalar */
@@ -858,13 +773,8 @@ const certifications = [
   }
 
   .cert-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: var(--space-4) var(--space-5);
     background-color: var(--bg);
     transition: border-color var(--duration-fast) var(--ease-out),
                 background-color var(--duration-fast) var(--ease-out);
@@ -873,6 +783,15 @@ const certifications = [
   .cert-item:hover {
     border-color: var(--border-strong);
     background-color: var(--bg-subtle);
+  }
+
+  .cert-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    width: 100%;
   }
 
   .cert-name {
@@ -887,6 +806,51 @@ const certifications = [
   .cert-check {
     flex-shrink: 0;
     color: var(--accent);
+  }
+
+  .cert-preview {
+    display: block;
+    position: relative;
+    margin: 0 var(--space-5) var(--space-5);
+    border-top: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    max-width: 560px;
+  }
+
+  .cert-preview-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    transition: opacity var(--duration-normal) var(--ease-out);
+  }
+
+  .cert-preview:hover .cert-preview-img {
+    opacity: 0.85;
+  }
+
+  .cert-preview-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background-color: color-mix(in srgb, var(--bg) 70%, transparent);
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+    border-radius: var(--radius-md);
+  }
+
+  .cert-preview:hover .cert-preview-overlay {
+    opacity: 1;
   }
 
   /* ─── CTA ─── */
