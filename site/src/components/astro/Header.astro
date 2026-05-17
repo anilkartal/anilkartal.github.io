@@ -1,0 +1,169 @@
+---
+import { site } from '@/data/site';
+import ThemeToggle from '@/components/react/ThemeToggle';
+import MobileNav from '@/components/react/MobileNav';
+
+const navLinks = [
+  { href: '/', label: 'Anasayfa' },
+  { href: '/hakkimda', label: 'Hakkımda' },
+  { href: '/deneyim', label: 'Deneyim' },
+  { href: '/projeler', label: 'Projeler' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/iletisim', label: 'İletişim' },
+];
+
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="header" id="site-header">
+  <div class="header__inner container">
+    <!-- Logo -->
+    <a href="/" class="header__logo" aria-label={`${site.name} — Anasayfa`}>
+      <span class="header__logo-name">{site.name}</span>
+      <span class="header__logo-role">{site.role}</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="header__nav" aria-label="Ana navigasyon">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class={`header__nav-link ${isActive(link.href) ? 'is-active' : ''}`}
+          aria-current={isActive(link.href) ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Sağ: Tema toggle + Mobil menü -->
+    <div class="header__actions">
+      <ThemeToggle client:load />
+      <div class="header__mobile-trigger">
+        <MobileNav client:load links={navLinks} currentPath={currentPath} />
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Scroll'da border ekle
+  const header = document.getElementById('site-header');
+  const observer = new IntersectionObserver(
+    ([entry]) => header?.classList.toggle('is-scrolled', !entry.isIntersecting),
+    { rootMargin: '-1px 0px 0px 0px', threshold: [1] }
+  );
+  const sentinel = document.createElement('div');
+  sentinel.style.cssText = 'position:absolute;top:0;left:0;height:1px;width:1px;pointer-events:none;';
+  document.body.prepend(sentinel);
+  observer.observe(sentinel);
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--bg);
+    border-bottom: 1px solid transparent;
+    transition:
+      border-color var(--duration-normal) var(--ease-out),
+      background-color var(--duration-normal) var(--ease-out);
+  }
+
+  .header.is-scrolled {
+    border-bottom-color: var(--border);
+    backdrop-filter: blur(8px);
+    background-color: color-mix(in srgb, var(--bg) 90%, transparent);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+    gap: var(--space-8);
+  }
+
+  /* Logo */
+  .header__logo {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    flex-shrink: 0;
+  }
+
+  .header__logo-name {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.2;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .header__logo:hover .header__logo-name {
+    color: var(--accent);
+  }
+
+  .header__logo-role {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-faint);
+    line-height: 1;
+    letter-spacing: 0.03em;
+  }
+
+  /* Desktop Nav */
+  .header__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .header__nav-link {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    transition: color var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .header__nav-link:hover {
+    color: var(--text);
+    background-color: var(--bg-subtle);
+  }
+
+  .header__nav-link.is-active {
+    color: var(--accent);
+  }
+
+  /* Actions */
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-shrink: 0;
+  }
+
+  /* Mobil menü trigger */
+  .header__mobile-trigger {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .header__nav {
+      display: none;
+    }
+
+    .header__mobile-trigger {
+      display: flex;
+    }
+  }
+</style>

@@ -1,0 +1,26 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630' viewBox='0 0 1200 630'>
+  <rect width='1200' height='630' fill='#0a0a0a'/>
+  <!-- Grid pattern -->
+  <defs>
+    <pattern id='grid' width='40' height='40' patternUnits='userSpaceOnUse'>
+      <path d='M 40 0 L 0 0 0 40' fill='none' stroke='#1a1a1a' stroke-width='1'/>
+    </pattern>
+  </defs>
+  <rect width='1200' height='630' fill='url(#grid)'/>
+  <!-- Accent bar sol -->
+  <rect x='80' y='0' width='2' height='630' fill='#3b5bdb' opacity='0.3'/>
+  <!-- Accent nokta -->
+  <rect x='80' y='200' width='2' height='120' fill='#3b5bdb'/>
+  <!-- Role label -->
+  <text x='110' y='220' font-family='monospace' font-size='13' fill='#525252' letter-spacing='3'>SOFTWARE TEST &amp; QUALITY EXPERT</text>
+  <!-- İsim -->
+  <text x='108' y='300' font-family='-apple-system, system-ui, sans-serif' font-size='56' font-weight='600' fill='#fafafa' letter-spacing='-1'>[Ad Soyad]</text>
+  <!-- Alt metin -->
+  <text x='110' y='360' font-family='-apple-system, system-ui, sans-serif' font-size='20' fill='#525252'>Playwright · TypeScript · Test Automation · AI Testing</text>
+  <!-- URL -->
+  <text x='110' y='540' font-family='monospace' font-size='13' fill='#3b5bdb' letter-spacing='1'>example.com</text>
+  <!-- Dekoratif kare sağda -->
+  <rect x='900' y='180' width='160' height='160' fill='none' stroke='#3b5bdb' stroke-width='1' opacity='0.2'/>
+  <rect x='920' y='200' width='120' height='120' fill='#3b5bdb' opacity='0.05'/>
+  <rect x='960' y='240' width='40' height='40' fill='#3b5bdb' opacity='0.4'/>
+</svg>
