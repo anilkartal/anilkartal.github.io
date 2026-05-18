@@ -187,6 +187,49 @@ pre.astro-code {
   }
 }
 
+/* ─── Yazar Kutusu (MDX içi) ─── */
+.prose .author-bio {
+  margin-top: 2em;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.prose .author-bio::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin-bottom: var(--space-4);
+}
+
+.prose .author-bio__name {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+
+.prose .author-bio__desc {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.prose .author-bio__name::after {
+  content: '·';
+  margin-left: var(--space-3);
+  color: var(--text-faint);
+}
+
 /* ─── Tablo ─── */
 .prose table {
   width: 100%;

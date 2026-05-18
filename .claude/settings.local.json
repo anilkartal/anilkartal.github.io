@@ -23,7 +23,8 @@
       "Bash(grep -E \"^\\(terminal|zap|wrench|shield|users|code\\)\\\\.ts$\")",
       "Bash(/usr/local/bin/npm run *)",
       "Bash(export PATH=\"$PATH:/usr/local/bin:/opt/homebrew/bin:/Users/hasananilkartal/.nvm/versions/node/$\\(ls /Users/hasananilkartal/.nvm/versions/node/)",
-      "Bash(export PATH=\"$PATH:/Users/hasananilkartal/.nvm/versions/node/v24.14.0/bin\")"
+      "Bash(export PATH=\"$PATH:/Users/hasananilkartal/.nvm/versions/node/v24.14.0/bin\")",
+      "Bash(/Users/hasananilkartal/.nvm/versions/node/v22.22.3/bin/npx astro *)"
     ]
   }
 }

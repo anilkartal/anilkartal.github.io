@@ -5,7 +5,11 @@ import { getCollection } from 'astro:content';
 import { formatDateShort } from '@/lib/utils';
 
 const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  .sort((a, b) => {
+    if (a.data.featured && !b.data.featured) return -1;
+    if (!a.data.featured && b.data.featured) return 1;
+    return b.data.date.valueOf() - a.data.date.valueOf();
+  });
 
 // Yıl bazlı gruplama
 const postsByYear = allPosts.reduce<Record<number, typeof allPosts>>((acc, post) => {
@@ -27,7 +31,6 @@ const categories = [
   'Career Growth',
 ];
 
-// readingTime için body içeriği render etmeden yaklaşık kelime sayımı
 function approxReadingTime(body: string | undefined) {
   if (!body) return '3 dk okuma';
   const words = body.trim().split(/\s+/).length;
@@ -36,14 +39,17 @@ function approxReadingTime(body: string | undefined) {
 }
 ---
 
-<BaseLayout title="Blog" description="Test otomasyonu, yazılım kalitesi ve mühendislik üzerine yazılar.">
+<BaseLayout
+  title="AI Testing Notes"
+  description="Yazılım testi, kalite mühendisliği, Playwright ekosistemi ve yapay zeka destekli test süreçleri üzerine teknik notlar, deneyimler ve mühendislik yaklaşımları."
+>
   <section class="blog-page section">
     <div class="container">
 
-      <SectionLabel number="00" label="Blog" />
-      <h1 class="blog-title">Yazılar</h1>
+      <SectionLabel number="00" label="AI & Testing" />
+      <h1 class="blog-title">AI Testing Notes</h1>
       <p class="blog-sub">
-        Playwright, TypeScript ve test mühendisliği üzerine notlar.
+        Yazılım testi, kalite mühendisliği, Playwright ekosistemi ve yapay zeka destekli test süreçleri üzerine teknik notlar, deneyimler ve mühendislik yaklaşımları.
       </p>
 
       <!-- Kategori filtresi -->
@@ -64,13 +70,19 @@ function approxReadingTime(body: string | undefined) {
                 <li
                   class="blog-post-row"
                   data-category={post.data.category}
+                  data-featured={post.data.featured ? 'true' : undefined}
                 >
                   <a href={`/blog/${post.id}`} class="blog-post-link">
                     <span class="blog-post-date">
                       {formatDateShort(post.data.date)}
                     </span>
                     <span class="blog-post-cat">{post.data.category}</span>
-                    <span class="blog-post-title">{post.data.title}</span>
+                    <span class="blog-post-title">
+                      {post.data.featured && (
+                        <span class="blog-post-pin" aria-label="Öne çıkan yazı">↑</span>
+                      )}
+                      {post.data.title}
+                    </span>
                     <span class="blog-post-time">
                       {approxReadingTime(post.body)}
                     </span>
@@ -99,7 +111,6 @@ function approxReadingTime(body: string | undefined) {
       row.style.display = match ? '' : 'none';
     });
 
-    // Boş yıl gruplarını gizle
     yearGroups.forEach((group) => {
       const visible = [...group.querySelectorAll<HTMLElement>('.blog-post-row')]
         .some((r) => r.style.display !== 'none');
@@ -123,7 +134,7 @@ function approxReadingTime(body: string | undefined) {
   .blog-sub {
     font-size: var(--text-lg);
     color: var(--text-muted);
-    max-width: 48ch;
+    max-width: 56ch;
     margin-bottom: var(--space-10);
     line-height: var(--leading-relaxed);
   }
@@ -221,7 +232,7 @@ function approxReadingTime(body: string | undefined) {
   }
 
   .blog-post-cat {
-    display: none; /* Desktop'ta title sütununa taşınmış */
+    display: none;
   }
 
   .blog-post-title {
@@ -230,10 +241,27 @@ function approxReadingTime(body: string | undefined) {
     color: var(--text);
     line-height: var(--leading-snug);
     transition: color var(--duration-fast) var(--ease-out);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
   }
 
   .blog-post-link:hover .blog-post-title {
     color: var(--accent);
+  }
+
+  /* Sabitlenmiş yazı göstergesi */
+  .blog-post-pin {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--accent);
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  /* Featured satır hafif vurgu */
+  .blog-post-row[data-featured] .blog-post-link {
+    border-left-color: color-mix(in srgb, var(--accent) 30%, transparent);
   }
 
   .blog-post-time {
@@ -245,7 +273,7 @@ function approxReadingTime(body: string | undefined) {
     letter-spacing: 0.03em;
   }
 
-  /* Mobile: kategori görünür, grid tek kolon */
+  /* Mobile */
   @media (max-width: 640px) {
     .blog-post-link {
       grid-template-columns: 1fr;

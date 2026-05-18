@@ -35,6 +35,10 @@
       "default": false,
       "type": "boolean"
     },
+    "featured": {
+      "default": false,
+      "type": "boolean"
+    },
     "cover": {
       "type": "string"
     },
