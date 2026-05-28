@@ -28,10 +28,15 @@
       "Bash(brew --version)",
       "Bash(curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)",
       "Bash(bash)",
-      "Bash(cat > *)"
+      "Bash(cat > *)",
+      "Bash(rm src/content/projects/api-test-framework.mdx src/content/projects/e2e-test-altyapisi.mdx && ls src/content/projects/)",
+      "Bash(ps -p 16211 -o pid,cwd,command)",
+      "Bash(ps -p 59494 -o pid,cwd,command)",
+      "Bash(python3 -m json.tool)"
     ],
     "additionalDirectories": [
-      "/Users/hasananilkartal"
+      "/Users/hasananilkartal",
+      "/Users/hasananilkartal/AI_Project/src/content/projects"
     ]
   }
 }
