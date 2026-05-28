@@ -32,7 +32,14 @@
       "Bash(rm src/content/projects/api-test-framework.mdx src/content/projects/e2e-test-altyapisi.mdx && ls src/content/projects/)",
       "Bash(ps -p 16211 -o pid,cwd,command)",
       "Bash(ps -p 59494 -o pid,cwd,command)",
-      "Bash(python3 -m json.tool)"
+      "Bash(python3 -m json.tool)",
+      "Bash(gh run *)",
+      "Bash(curl -s https://hasananilkartal.com)",
+      "Bash(curl -sv https://hasananilkartal.com)",
+      "Bash(curl -s https://anilkartal.github.io)",
+      "Bash(curl -s https://anilkartal.github.io/sitemap-index.xml)",
+      "Bash(curl -s https://anilkartal.github.io/sitemap.xml)",
+      "Bash(curl -s https://anilkartal.github.io/sitemap-0.xml)"
     ],
     "additionalDirectories": [
       "/Users/hasananilkartal",

@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 
 export default defineConfig({
-  site: 'https://hasananilkartal.com',
+  site: 'https://anilkartal.github.io',
   integrations: [
     mdx(),
     sitemap(),

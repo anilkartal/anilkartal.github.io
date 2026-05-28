@@ -11,7 +11,7 @@ export const site = {
     x: "https://x.com/username",
   },
   now: "Şu sıralar yapay zeka tabanlı sürdürülebilir test mimarileri üzerine çalışıyorum.",
-  url: "https://hasananilkartal.com",
+  url: "https://anilkartal.github.io",
 } as const;
 
 export type SiteConfig = typeof site;
