@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hasananilkartal.com/sitemap-index.xml
+Sitemap: https://anilkartal.github.io/sitemap-index.xml

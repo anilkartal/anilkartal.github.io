@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import SectionLabel from '@/components/astro/SectionLabel.astro';
 import TechTag from '@/components/astro/TechTag.astro';
 import { ExternalLink } from '@lucide/astro';
+import { site } from '@/data/site';
 import '@/styles/typography.css';
 
 interface Props {
@@ -16,9 +17,28 @@ interface Props {
 }
 
 const { title, description, year, role, technologies, github, demo } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, site.url).href;
+
+const projectSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: title,
+  description,
+  author: { '@type': 'Person', name: site.name, url: site.url },
+  url: canonicalURL,
+  keywords: technologies.join(', '),
+  inLanguage: 'tr',
+  ...(github ? { codeRepository: github } : {}),
+};
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout
+  title={title}
+  description={description}
+  schema={projectSchema}
+  keywords={technologies.join(', ')}
+>
   <article class="project-page">
     <div class="container">
 

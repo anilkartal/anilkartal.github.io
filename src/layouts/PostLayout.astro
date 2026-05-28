@@ -63,7 +63,14 @@ const blogPostingSchema = {
 };
 ---
 
-<BaseLayout title={title} description={description} schema={blogPostingSchema}>
+<BaseLayout
+  title={title}
+  description={description}
+  schema={blogPostingSchema}
+  ogType="article"
+  publishedTime={date.toISOString()}
+  keywords={tags.join(', ')}
+>
   <article class="post-page">
     <div class="container">
       <div class="post-layout">
